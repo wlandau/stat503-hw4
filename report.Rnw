@@ -1,0 +1,154 @@
+% !TEX TS-program = knitr
+\documentclass{article}
+
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{caption}
+\usepackage{color}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{latexsym}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\usepackage[nottoc]{tocbibind}
+\usepackage{setspace}
+\usepackage{tikz}
+\usepackage{tkz-graph}
+\usepackage{url}
+
+\providecommand{\all}{\ \forall \ }
+\providecommand{\bs}{\backslash}
+\providecommand{\e}{\varepsilon}
+\providecommand{\E}{\ \exists \ }
+\providecommand{\lm}[2]{\lim_{#1 \rightarrow #2}}
+\providecommand{\m}[1]{\mathbb{#1}}
+\providecommand{\mc}[1]{\mathcal{#1}}
+\providecommand{\nv}{{}^{-1}}
+\providecommand{\ov}[1]{\overline{#1}}
+\providecommand{\p}{\newpage}
+\providecommand{\q}{$\quad$ \newline}
+\providecommand{\rt}{\rightarrow}
+\providecommand{\Rt}{\Rightarrow}
+\providecommand{\vc}[1]{\boldsymbol{#1}}
+\providecommand{\wh}[1]{\widehat{#1}}
+
+%\renewcommand\bibname{References}
+%\renewcommand{\thesection}{Problem \arabic{section}}
+%\renewcommand{\thesubsection}{Part \alph{subsection}}
+
+\fancyhead{}
+\fancyfoot{}
+\fancyhead[R]{\thepage}
+\fancyhead[C]{Kaplan, Landau, Liu, Rutter}
+
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=blue
+}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{ 
+  language=C,                % the language of the code
+  numbers=left,
+  numberfirstline=true,
+  numbersep=5pt,                  % how far the line-numbers are from the code
+  backgroundcolor=\color{white},      % choose the background color. You must add \usepackage{color}
+  showspaces=false,               % show spaces adding particular underscores
+  showstringspaces=false,         % underline spaces within strings
+  showtabs=false,                 % show tabs within strings adding particular underscores
+  frame=lrb,                   % adds a frame around the code
+  rulecolor=\color{black},        % if not set, the frame-color may be changed on line-breaks within not-black text 
+  tabsize=2,                      % sets default tabsize to 2 spaces
+  captionpos=t,                   % sets the caption-position 
+  breaklines=true,                % sets automatic line breaking
+  breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+  %title=\lstname,                   % show the filename of files included with \lstinputlisting;
+  keywordstyle=\color{blue},          % keyword style
+  commentstyle=\color{gray},       % comment style
+  stringstyle=\color{dkgreen},         % string literal style
+  escapeinside={\%*}{*)},            % if you want to add LaTeX within your code
+  morekeywords={*, ...},               % if you want to add more keywords to the set
+  xleftmargin=0.053in, % left horizontal offset of caption box
+  xrightmargin=-.03in % right horizontal offset of caption box
+}
+
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\parbox{\textwidth}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}}
+\captionsetup[lstlisting]{format = listing, labelfont = white, textfont = white}
+ %For caption-free listings, comment out the 3 lines above
+ \lstset{frame = single}
+
+<<echo = F>>=
+library(knitr)
+knitr::knit_hooks$set(inline = as.character)
+knitr::opts_chunk$set(cache=T, fig.height = 4, echo = F, message=F, results="hide")
+knitr::opts_knit$set(eval.after = 'fig.cap')
+@
+
+
+%%% TITLE AND DATE
+
+\title{\vspace{4cm} \hrule  \vspace{0.4cm} \huge
+STAT 503 Homework 4: STAT 101 Grades
+\vspace{0.4cm} \hrule}
+\date{\today}
+
+
+%%% DOCUMENT
+
+\begin{document}
+\begin{titlepage}
+\pagenumbering{gobble}
+\maketitle
+
+\begin{center}
+\vspace{1cm}
+\Large
+\begin{center}
+Andee Kaplan, Will Landau, Fangge Liu, Lindsay Rutter \\ $\quad$ \\
+Department of Statistics \\
+Iowa State University \\ $\quad$ \\
+\end{center}
+
+\vfill
+\large
+Copyright \copyright ~ Andee Kaplan, Will Landau, Fangge Liu, Lindsay Rutter 2015. 
+\end{center}
+\end{titlepage}
+
+\newpage 
+\pagestyle{fancy}
+\setcounter{page}{1}
+\pagenumbering{roman}
+\tableofcontents 
+
+\newpage
+\setcounter{page}{1}
+\pagenumbering{arabic}
+%\fancyhead[C]{\thesection}
+
+\begin{flushleft}
+
+
+%%% FIRST 
+
+\section{Introduction}
+
+
+
+\end{flushleft}
+\newpage 
+\bibliographystyle{plain} 
+\bibliography{report}
+\end{document}
