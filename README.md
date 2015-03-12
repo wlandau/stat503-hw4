@@ -19,7 +19,7 @@ We might use this section to write down what we're doing so we don't step on eac
 
 ### Choice of markup language
 
-We could write the report in either knitR-LaTeX or knitR-Rmarkdown. LaTeX supports symbolic references for figures and tables and is recommended over Rmarkdown for serious scholarly work, but Rmarkdown is often cleaner and more convenient.
+We could write the report in either knitR-LaTeX or knitR-Rmarkdown. Both LaTeX and Rmarkdown support symbolic references for figures and tables, and Rmarkdown is often cleaner and more convenient.
 
 ### Weaving R code
 
