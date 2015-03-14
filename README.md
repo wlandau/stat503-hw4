@@ -9,6 +9,8 @@ We might use this section to write down what we're doing so we don't step on eac
 
 ### Will
 
+- Visually analyze patterns of missingness for each semester, and use the insight to  offer suggestions about a preliminary clustering/imputation strategy.
+
 - Preprocessing the data with the inclusion matrix, NAs-as-zeroes imputation method (data/allInclusionMat.csv).
 
 ### Fangge
