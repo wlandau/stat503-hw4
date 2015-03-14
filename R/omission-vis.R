@@ -69,12 +69,12 @@ missing_barcodes = function(.data, .title){
 
 ## ---- missingBarcodesFall13
 
-missingBarcodesFall13 = missing_barcodes(missing_long[[1]], "Fall 2013")
+missing_barcodes(missing_long[[1]], "Fall 2013")
 
 ## ---- missingBarcodesFall14
 
-missingBarcodesFall14 = missing_barcodes(missing_long[[2]], "Fall 2014")
+missing_barcodes(missing_long[[2]], "Fall 2014")
 
 ## ---- missingBarcodesSpring14
 
-missingBarcodesSpring14 = missing_barcodes(missing_long[[3]], "Spring 2014")
+missing_barcodes(missing_long[[3]], "Spring 2014")
