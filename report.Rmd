@@ -20,14 +20,14 @@ We have three homework grade spreadsheets, each of which comes directly from Bla
 
 #Missing values
 
-A large fraction of homework scores appear as "NA", or missing. Since the spreadsheets come directly from Blackboard, we  assume that almost all NA's correspond to homeworks that students failed to turn in, and only a small number, if any, are from bookkeeping errors. Before clustering, we need to impute these values, and for a imputation strategy, we look at patterns of omission.
+A large fraction of homework scores appear as "NA", or missing. Since the spreadsheets come directly from Blackboard, we  assume that almost all NA's correspond to homeworks that students failed to turn in, and only a small number, if any, are from bookkeeping errors. Before clustering, we need to impute these values, and for a imputation strategy, we look at patterns of missingness.
 
-%```{r read-omission-vis.R}
+%```{r read-missing-vis.R}
 %library(knitr)
-%read_chunk("R/omission-vis.R")
+%read_chunk("R/missing-vis.R")
 %```
 
-```{r omissionVisSetup}
+```{r missingVisSetup}
 library(ggplot2)
 library(gridExtra)
 library(reshape2)
