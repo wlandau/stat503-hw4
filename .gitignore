@@ -1,0 +1,9 @@
+.DS_Store
+.Rapp*
+*.aux
+*.bbl
+*.log
+*.toc
+*.tex
+report_cache/*
+report_files/*
