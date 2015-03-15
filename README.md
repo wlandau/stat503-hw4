@@ -17,6 +17,13 @@ We might use this section to write down what we're doing so we don't step on eac
 
 ### Lindsay
 
+- Cluster the data into four groups for each semester
+  - 1) Group 1: Drop outs (Students who miss last consecutive half of assignments) 
+  - 2) Group 2: Common missings (Students not from Group 1 who miss at least half of assignments)
+  - 3) Group 3: Sporadic missings (Students not from Group 1 or 2 who miss at least one assignment)
+  - 4) Group 4: Never missings (Students who never miss any assignments)
+- Perform nearest neighbor analysis on Group 3 students
+
 # The report
 
 ### Choice of markup language
