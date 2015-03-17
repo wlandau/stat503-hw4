@@ -28,7 +28,7 @@ We might use this section to write down what we're doing so we don't step on eac
 
 ### Choice of markup language
 
-We could write the report in either knitR-LaTeX or knitR-Rmarkdown. Both LaTeX and Rmarkdown support symbolic references for figures and tables, and Rmarkdown is often cleaner and more convenient.
+It seems like the choice is Rmarkdown.
 
 ### Weaving R code
 
@@ -36,4 +36,4 @@ We could either weave code inline using <<>>=...@ or \`\`\`{r...}...\`\`\`, or w
 
 # Handing in our work
 
-We could upload the report (and separate R code files, if needed) of we could just send Blackboard a link to this GitHub repo. Maintianing a well-documented, self-sufficient GitHub repo is an acceptable form of reproducibility.
+We could upload the report (and separate R code files, if needed) or we could just make the GitHub repo public and send Blackboard a link to it. Maintianing a well-documented, self-sufficient GitHub repo is an acceptable form of reproducibility.
