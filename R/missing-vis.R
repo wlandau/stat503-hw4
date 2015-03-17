@@ -20,7 +20,7 @@ missing = lapply(.data, function(d){
 })
 
 num_missing =  lapply(missing, function(d){
-  data.frame(Username = d$Username, Section = d$Section, Number_missing = apply(d[,-(1:2)], 1, sum))
+  data.frame(Username = d$Username, Section = d$Section, Number_missing = apply(d[,-(1:2)], 1, function(x){sum(is.na(x))}))
 })
 
 Semester = rep(names(missing), times = sapply(missing, function(d){dim(d)[1]}))

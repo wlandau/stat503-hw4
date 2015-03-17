@@ -20,12 +20,32 @@ We have three homework grade spreadsheets, each of which comes directly from Bla
 
 #Missing values
 
-A large fraction of homework scores appear as "NA", or missing. Since the spreadsheets come directly from Blackboard, we  assume that almost all NA's correspond to homeworks that students failed to turn in, and only a small number, if any, are from bookkeeping errors. Before clustering, we need to impute these values, and for a imputation strategy, we look at patterns of missingness.
+A large fraction of homework scores appear as "NA", or missing. Since the spreadsheets come directly from Blackboard, we  assume that almost all NA's correspond to homeworks that students failed to turn in, and only a small number, if any, are from bookkeeping errors. Before clustering, we need to impute these values, and for a imputation strategy, we look at patterns of missingness. 
 
-%```{r read-missing-vis.R}
-%library(knitr)
-%read_chunk("R/missing-vis.R")
-%```
+Figure \ref{fig:missingHist} plots the number of missing values per student for all students. Most of the students missed few to no assignments, and some students missed several. This pattern is consistent with each semester and section. 
+
+Figures \ref{fig:missingBarcodesFall13}, \ref{fig:missingBarcodesFall14}, and \ref{fig:missingBarcodesSpring14} show each student's pattern of missingness. General patterns vary significantly by semester and are mostly consistent by section within each semester. 
+
+From visual inspection, we can already partition the students in each semester into four groups...
+
+<!---
+Maybe insert Lindsay's partitioning, plus a ktable of the number of students in each group in each semester:
+
+# - Fall13_G1 (n=45)
+# - Fall13_G2 (n=24)
+
+...
+
+See Andee's mwe.Rmd for an example of ktable() in a code chunk. 
+--->
+
+
+<!---
+```{r read-missing-vis.R}
+library(knitr)
+read_chunk("R/missing-vis.R")
+```
+-->
 
 ```{r missingVisSetup}
 library(ggplot2)
@@ -46,14 +66,14 @@ missing = lapply(.data, function(d){
 })
 
 num_missing =  lapply(missing, function(d){
-  data.frame(Username = d$Username, Section = d$Section, Number_missing = apply(d[,-(1:2)], 1, sum))
+  data.frame(Username = d$Username, Section = d$Section, Number_missing = apply(d[,-(1:2)], 1, function(x){sum(is.na(x))}))
 })
 
 Semester = rep(names(missing), times = sapply(missing, function(d){dim(d)[1]}))
 num_missing = as.data.frame(cbind(Semester, do.call("rbind", num_missing)))
 ```
 
-```{r missingHist}
+```{r missingHist,  fig.cap="\\label{fig:missingHist} number of missing values per student for all students. The top right panel facets by semester, and the bottom left panel facets by semester and section number. Most of the students missed few to no assignments, and some students missed several. This pattern is consistent with each semester and section."}
 pl1 = ggplot(num_missing) + 
   geom_histogram(aes(x = Number_missing), binwidth = 1)
 
@@ -94,15 +114,15 @@ missing_barcodes = function(.data, .title){
 }
 ```
 
-```{r missingBarcodesFall13}
+```{r missingBarcodesFall13, fig.cap="\\label{fig:missingBarcodesFall13} fall 2013"}
 missing_barcodes(missing_long[[1]], "Fall 2013")
 ```
 
-```{r missingBarcodesFall14}
+```{r missingBarcodesFall14, fig.cap="\\label{fig:missingBarcodesFall14} fall 2014"}
 missing_barcodes(missing_long[[2]], "Fall 2014")
 ```
 
-```{r missingBarcodesSpring14}
+```{r missingBarcodesSpring14, fig.cap="\\label{fig:missingBarcodesSpring14} spring 2014"}
 missing_barcodes(missing_long[[3]], "Spring 2014")
 ```
 
