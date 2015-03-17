@@ -24,7 +24,7 @@ A large fraction of homework scores appear as "NA", or missing. Since the spread
 
 Figure \ref{fig:missingHist} plots the number of missing values per student for all students. Most of the students missed few to no assignments, and some students missed several. This pattern is consistent with each semester and section. Figure \ref{fig:missingByAssign} shows the number of missing values for each assignment within each semester and section. For the fall semesters, notable spikes occur at chapter 9 ("Understanding Randomness") and topic 9 ("Sample Surveys"). Otherwise, for most sections, the number of missings increased steadily for each section over time.
 
-Figures \ref{fig:missingBarcodesFall13}, \ref{fig:missingBarcodesFall14}, and \ref{fig:missingBarcodesSpring14} show each student's pattern of missingness. General patterns vary significantly by semester and are mostly consistent by section within each semester. 
+Figures \ref{fig:missingBarcodesFall13}, \ref{fig:missingBarcodesFall14}, and \ref{fig:missingBarcodesSpring14} show each student's pattern of missingness. General patterns are consistent. Most students had few missing assignments scattered sporadically over the semester, some students dropped the class early, and a smaller students missed strings of around five or ten consecutive assignments in the beginning, middle, or end of the semester.
 
 From visual inspection, we can already partition the students in each semester into four groups...
 
