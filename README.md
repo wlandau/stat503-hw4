@@ -1,6 +1,13 @@
 # stat503-hw4
 This file is a general record of decisions, issues, and logicstics.
 
+
+# Unclaimed ideas
+
+
+* Visualize the clean data
+
+
 # Division of labor
 
 We might use this section to write down what we're doing so we don't step on each other's toes.
