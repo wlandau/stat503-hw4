@@ -7,6 +7,11 @@ We might use this section to write down what we're doing so we don't step on eac
 
 ### Andee
 
+Apply methods of clustering to the clean data. Apply to one semester and use model to predict clustering for other semesters, as suggested by Dr. Cook. Methods to apply:
+
+ - Self organizing map for groups 3 & 4 (together or separate?)
+ - Model based clustering for groups 3 & 4 (together or separate?)
+
 ### Will
 
 - Visually analyze patterns of missingness for each semester, and use the insight to  offer suggestions about a preliminary clustering/imputation strategy.
