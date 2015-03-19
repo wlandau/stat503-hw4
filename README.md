@@ -11,7 +11,7 @@ We might use this section to write down what we're doing so we don't step on eac
 
 - Visually analyze patterns of missingness for each semester, and use the insight to  offer suggestions about a preliminary clustering/imputation strategy.
 
-- Preprocessing the data with the inclusion matrix, NAs-as-zeroes imputation method (data/allInclusionMat.csv).
+- Applied Dr. Cook's knn imputation method to groups 3 and 4 from Lindsay's method for each semester. Data in data/cleanGrades.Rda is ready for clustering.
 
 ### Fangge
 
@@ -24,6 +24,10 @@ We might use this section to write down what we're doing so we don't step on eac
   - 4) Group 4: Never missings (Students who never miss any assignments)
 - Perform nearest neighbor analysis on Group 3 students
 
+# Imputation and NA's
+
+Now that we have Dr. Cook's imputation code and Lindsay's code for getting rid of problem students, do we really need to implement multiple imputation strategies?
+
 # The report
 
 ### Choice of markup language
@@ -32,7 +36,8 @@ It seems like the choice is Rmarkdown.
 
 ### Weaving R code
 
-We could either weave code inline using <<>>=...@ or \`\`\`{r...}...\`\`\`, or we could use read_chunk("R/..."). If we use read_chunk, we may want to move the code out of the R folder for the purposes of handing it in (though we could hand it in however we want if all we send Blackboard is a link to this repo). Also, we shouldn't set cache=T when using read_chunk, but this may not be a problem. (Small data hopefully means quick code and document compilation.)
+We could either weave code inline using \`\`\`{r...}...\`\`\`, but that gets messy and cumbersome. We could use read_chunk("../R/..."), but then we can't set cache=T, so compile time is really long. A better option  might be to use source("../R/...") to load code from the R folder into the report. This enables caching, keeps inline code out of the report so that we can concentrate on prose, and helps minimize the volume of repeat code we have to write.
+
 
 # Handing in our work
 

@@ -5,5 +5,5 @@
 *.log
 *.toc
 *.tex
-report_cache/*
-report_files/*
+report/report_cache/*
+report/report_files/*

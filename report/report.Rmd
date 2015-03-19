@@ -22,157 +22,63 @@ We have three homework grade spreadsheets, each of which comes directly from Bla
 
 A large fraction of homework scores appear as "NA", or missing. Since the spreadsheets come directly from Blackboard, we  assume that almost all NA's correspond to homeworks that students failed to turn in, and only a small number, if any, are from bookkeeping errors. Before clustering, we need to impute these values, and for a imputation strategy, we look at patterns of missingness. 
 
+###Visual patterns in missing values
+
 Figure \ref{fig:missingHist} plots the number of missing values per student for all students. Most of the students missed few to no assignments, and some students missed several. This pattern is consistent with each semester and section. Figure \ref{fig:missingByAssign} shows the number of missing values for each assignment within each semester and section. For the fall semesters, notable spikes occur at chapter 9 ("Understanding Randomness") and topic 9 ("Sample Surveys"). Otherwise, for most sections, the number of missings increased steadily for each section over time.
 
 Figures \ref{fig:missingBarcodesFall13}, \ref{fig:missingBarcodesFall14}, and \ref{fig:missingBarcodesSpring14} show each student's pattern of missingness. General patterns are consistent. Most students had few missing assignments scattered sporadically over the semester, some students dropped the class early, and a smaller students missed strings of around five or ten consecutive assignments in the beginning, middle, or end of the semester.
 
-From visual inspection, we can already partition the students in each semester into four groups...
 
-<!---
-Maybe insert Lindsay's partitioning, plus a ktable of the number of students in each group in each semester:
-
-# - Fall13_G1 (n=45)
-# - Fall13_G2 (n=24)
-
-...
-
-See Andee's mwe.Rmd for an example of ktable() in a code chunk. 
---->
-
-
-<!---
-```{r read-missing-vis.R}
-library(knitr)
-read_chunk("R/missing-vis.R")
-```
--->
-
-```{r missingVisSetup}
-library(ggplot2)
-library(gridExtra)
-library(plyr)
-library(reshape2)
-
-.data = list(
-  fall13 = read.csv("data/13Falla.csv"),
-  fall14 = read.csv("data/14Falla.csv"),
-  spring14 = read.csv("data/14Springa.csv")
-)
-
-for(d in names(.data))
-  .data[[d]]$Section =  as.factor(.data[[d]]$Section)
-
-missing = lapply(.data, function(d){
-  cbind(d[,1:2], is.na(d[,-c(1, 2, dim(d)[2])]))
-})
-
-num_missing =  lapply(missing, function(d){
-  data.frame(Username = d$Username, Section = d$Section, Number_missing = apply(d[,-(1:2)], 1, sum))
-})
-
-Semester = rep(names(missing), times = sapply(missing, function(d){dim(d)[1]}))
-num_missing = as.data.frame(cbind(Semester, do.call("rbind", num_missing)))
+```{r missing-vis.R}
+source("../R/missing-vis.R")
 ```
 
 ```{r missingHist,  fig.cap="\\label{fig:missingHist} number of missing values per student for all students. The top right panel facets by semester, and the bottom left panel facets by semester and section number. Most of the students missed few to zero assignments, and some students missed several. This pattern is consistent with each semester and section."}
-pl1 = ggplot(num_missing) + 
-  geom_histogram(aes(x = Number_missing), binwidth = 1)
-
-pl2 = ggplot(num_missing) + 
-  geom_histogram(aes(x = Number_missing), binwidth = 1) +
-  facet_grid(Semester~.)
-
-pl3 = ggplot(num_missing) + 
-  geom_histogram(aes(x = Number_missing), binwidth = 1) +
-  facet_grid(Section~Semester)
-
-grid.arrange(pl1, pl2, pl3, ncol = 2)
+missingHist()
 ```
 
 
 ```{r missingByAssign, fig.cap="\\label{fig:missingByAssign} number of missing values per assignment for each semester and section. For the fall semesters, notable spikes occur at chapter 9 (\"Understanding Randomness\") and topic 9 (\"Sample Surveys\"). Otherwise, for most sections, the number of missings increased steadily for each section over time."}
-num_missing =  lapply(missing, function(D){
-  n = colnames(D[,-(1:2)])
-  ddply(D, "Section", function(d){
-  data.frame(Topic = ordered(n, n), 
-                    Topicn = 1:length(n),
-                    Number_missing = apply(d[,-(1:2)], 2, sum))})
-})
-
-pl1 = ggplot(num_missing[[1]]) + 
-  geom_line(aes(x = Topicn, y = Number_missing, group = Section, color = Section)) +
-  scale_x_continuous(breaks=num_missing[[1]]$Topicn, labels=num_missing[[1]]$Topic) +
-   xlab("Topic") + 
-   labs(title = "Fall 2013") +
-   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, size = 6))
-
-pl2 = ggplot(num_missing[[2]]) + 
-  geom_line(aes(x = Topicn, y = Number_missing, group = Section, color = Section)) +
-  scale_x_continuous(breaks=num_missing[[2]]$Topicn, labels=num_missing[[2]]$Topic) +
-  xlab("Topic") + 
-   labs(title = "Fall 2014") +
-   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, size = 6))
-
-pl3 = ggplot(num_missing[[3]]) + 
-  geom_line(aes(x = Topicn, y = Number_missing, group = Section, color = Section)) +
-  scale_x_continuous(breaks=num_missing[[3]]$Topicn, labels=num_missing[[3]]$Topic) +
-  xlab("Topic") + 
-   labs(title = "Spring 2014") +
-   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, size = 6))
-
-grid.arrange(pl1, pl2, pl3, ncol = 2)
-```
-
-
-```{r missingBarcodesSetup}
-missing_long = lapply(missing, function(d){
-  x = melt(d, id.vars = c("Username", "Section"))
-  colnames(x) = c("Username", "Section", "Homework", "Missing")
-  x$Missing = factor(x$Missing, levels = c(TRUE, FALSE), labels = c("Missing", "Turned-in"))
-  x$Homework = ordered(x$Homework, levels = unique(x$Homework))
-  uuname = unique(x$Username)
-  x$Username = ordered(x$Username, uuname[sample.int(length(uuname), replace = F)])
-  x
-})
-
-missing_barcodes = function(.data, .title){
-  pl = ggplot(data = .data) + 
-    geom_tile(aes(x = Homework, y = Username, fill=Missing)) +
-    scale_fill_manual(values = c("black", "LightGray"), name = "Missing",
-                                 breaks = c("Missing", "Turned-in")) +
-    facet_wrap(~Section, scales = "free") +
-    labs(title = .title) + 
-    theme(axis.text.x = element_text(size = 8, angle = 90, vjust = 0.5),
-               axis.text.y = element_blank(), 
-               axis.ticks.y = element_blank(), 
-               panel.background = element_blank(),
-               panel.grid.major = element_blank(), 
-               panel.grid.minor = element_blank())
-    return(pl)
-}
+missingByAssign()
 ```
 
 ```{r missingBarcodesFall13, fig.cap="\\label{fig:missingBarcodesFall13} missing assignment records for fall 2013 students faceted by section number. Each row represents a student, each column is an assignment, and the tiles are colored according to the status of the corresponding assignment (missing or turned in). General patterns are consistent across section number. Most students missed few assignments, and the students with the most missings usually missed the last fifteen assignments. These students most likely dropped the class early.."}
-missing_barcodes(missing_long[[1]], "Fall 2013")
+missingBarcodesFall13()
 ```
 
 ```{r missingBarcodesFall14, fig.cap="\\label{fig:missingBarcodesFall14} Same as Figure \\ref{fig:missingBarcodesFall13}, but for fall 2014. We see some early drops, but also some students who failed to turn in either the first few or the middle few assignments."}
-missing_barcodes(missing_long[[2]], "Fall 2014")
+missingBarcodesFall14()
 ```
 
 ```{r missingBarcodesSpring14, fig.cap="\\label{fig:missingBarcodesSpring14} Same as Figure \\ref{fig:missingBarcodesFall13}, but for spring 2014. Patterns are similar to those of Figure \\ref{fig:missingBarcodesFall13} (fall 2013)."}
-missing_barcodes(missing_long[[3]], "Spring 2014")
+missingBarcodesSpring14()
 ```
 
+###Grouping students by missingness
 
+From inspection, we can partition the students in each semester into four groups...
 
+```{r GeneralMissingClusters}
+source("../R/GeneralMissingClusters.R")
+```
 
+<!--- WL: 
+Lindsay's code is inserted above. I think we need an explanation, along with a ktable of the number of students in each group in each semester (Fall13_G1 n=45, Fall13_G2 n=24, etc) to show that throwing out problem students doesn't reduce the size of our data very much. See mwe.Rmd from Andee's email for an example of ktable() in a code chunk. 
+--->
+
+### Trim and impute
+
+As we explain above, groups 1 and 2 are relatively small, and the students in these groups missed at least half of the homework assignments. With good reason, we give each of these groups its own cluster and concentrate the rest of our analysis on groups 3 and 4 only. These remaining students have some missing values left, and we impute them with the nearest neighbors imputation functionality in the DMwR [@DMwR] package. Dr. Cook wrote most of this code.
+
+```{r impute.R}
+source("../R/impute.R")
+```
 
 
 
 #Acknowledgements
 
-We would like to thank Dr. Cook for her advice on dealing with missing values and her imputation code. Also, we used the R packages ggplot2 [@ggplot2], gridExtra [@gridExtra], and reshape2 [@reshape2].
+We would like to thank Dr. Cook for her advice on dealing with missing values and her imputation code. Also, we used the R packages DMwR [@DMwR], ggplot2 [@ggplot2], gridExtra [@gridExtra], and reshape2 [@reshape2].
 
 #References
 

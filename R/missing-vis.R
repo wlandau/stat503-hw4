@@ -1,6 +1,6 @@
-# Plots pattenrs of omission in data. Generates the plots for the "Missing values" section of the report.
+# Plots pattenrs of missingness in data. Generates the plots for the "Missing values" section of the report.
 
-## ---- omissionVisSetup
+## ---- missingVisSetup
 
 library(ggplot2)
 library(gridExtra)
@@ -27,23 +27,22 @@ num_missing =  lapply(missing, function(d){
 Semester = rep(names(missing), times = sapply(missing, function(d){dim(d)[1]}))
 num_missing = as.data.frame(cbind(Semester, do.call("rbind", num_missing)))
 
-## ---- missingHist
+missingHist = function(){
+  pl1 = ggplot(num_missing) + 
+    geom_histogram(aes(x = Number_missing), binwidth = 1)
 
-pl1 = ggplot(num_missing) + 
-  geom_histogram(aes(x = Number_missing), binwidth = 1)
+  pl2 = ggplot(num_missing) + 
+    geom_histogram(aes(x = Number_missing), binwidth = 1) +
+    facet_grid(Semester~.)
 
-pl2 = ggplot(num_missing) + 
-  geom_histogram(aes(x = Number_missing), binwidth = 1) +
-  facet_grid(Semester~.)
+  pl3 = ggplot(num_missing) + 
+    geom_histogram(aes(x = Number_missing), binwidth = 1) +
+    facet_grid(Section~Semester)
 
-pl3 = ggplot(num_missing) + 
-  geom_histogram(aes(x = Number_missing), binwidth = 1) +
-  facet_grid(Section~Semester)
+  grid.arrange(pl1, pl2, pl3, ncol = 2)
+}
 
-grid.arrange(pl1, pl2, pl3, ncol = 2)
-
-## ---- missingByAssign
-
+missingByAssign = function(){
 num_missing =  lapply(missing, function(D){
   n = colnames(D[,-(1:2)])
   ddply(D, "Section", function(d){
@@ -74,6 +73,8 @@ pl3 = ggplot(num_missing[[3]]) +
    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, size = 6))
 
 grid.arrange(pl1, pl2, pl3, ncol = 2)
+}
+
 
 ## ---- missingBarcodesSetup
 
@@ -105,12 +106,18 @@ missing_barcodes = function(.data, .title){
 
 ## ---- missingBarcodesFall13
 
-missing_barcodes(missing_long[[1]], "Fall 2013")
+missingBarcodesFall13 = function(){
+  missing_barcodes(missing_long[[1]], "Fall 2013")
+}
 
 ## ---- missingBarcodesFall14
 
-missing_barcodes(missing_long[[2]], "Fall 2014")
+missingBarcodesFall14 = function(){
+  missing_barcodes(missing_long[[2]], "Fall 2014")
+}
 
 ## ---- missingBarcodesSpring14
 
-missing_barcodes(missing_long[[3]], "Spring 2014")
+missingBarcodesSpring14 = function(){
+  missing_barcodes(missing_long[[3]], "Spring 2014")
+}

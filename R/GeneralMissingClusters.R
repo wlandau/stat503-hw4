@@ -14,9 +14,9 @@
 # - Fall14_G3 (n=236) (Group 3 from Fall 14)
 # - Fall14_G4 (n=314) (Group 4 from Fall 14)
 
-Fall13 <- read.csv("13Falla.csv")
-Fall14 <- read.csv("14Falla.csv")
-Spring14 <- read.csv("14Springa.csv")
+Fall13 <- read.csv("../data/13Falla.csv")
+Fall14 <- read.csv("../data/14Falla.csv")
+Spring14 <- read.csv("../data/14Springa.csv")
 
 ############################ FALL13 ############################
 
@@ -79,4 +79,4 @@ Fall14_G3 = temp[ind,]
 Fall14_G4 = temp[-ind,]
 
 ############################# SAVE ALL CLUSTERS #############################
-save(Fall13_G1, Fall13_G2, Fall13_G3, Fall13_G4, Spring14_G1, Spring14_G2, Spring14_G3, Spring14_G4, Fall14_G1, Fall14_G2, Fall14_G3, Fall14_G4, file="mainClusters.Rda")
+save(Fall13_G1, Fall13_G2, Fall13_G3, Fall13_G4, Spring14_G1, Spring14_G2, Spring14_G3, Spring14_G4, Fall14_G1, Fall14_G2, Fall14_G3, Fall14_G4, file="../data/mainClusters.Rda")
