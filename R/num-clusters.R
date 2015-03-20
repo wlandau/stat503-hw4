@@ -4,13 +4,13 @@ library(ggplot2)
 # load("../data/cleanGrades.Rda")
 
 # taken directly from Dr. Cook's code from class
-wb.df = function(.data, semester = "fall13", max.k = 15){
+wb.df = function(.data, semester = "fall13", max.k = 20){
   .data = .data[,-(1:2)]
   df.dist <- dist(.data)
   ncl <- NULL
 
   for(i in 2:max.k){
-    df.km <- kmeans(.data, i)
+    df.km <- kmeans(.data, centers = i, iter.max = 20)
     ncl <- rbind(ncl, data.frame(k = i, 
                                                 wb.ratio = cluster.stats(df.dist, df.km$cluster)$wb.ratio, 
                                                 method = "kmeans"))
@@ -30,8 +30,8 @@ wb.df = function(.data, semester = "fall13", max.k = 15){
   ncl
 }
 
-wb.ratio = rbind(wb.df(fall13, "fall13"), wb.df(fall14, "fall14"), wb.df(spring14, "spring14"))
-saveRDS(wb.ratio, "../data/wb-ratio.rds")
+#wb.ratio = rbind(wb.df(fall13, "fall13"), wb.df(fall14, "fall14"), wb.df(spring14, "spring14"))
+#saveRDS(wb.ratio, "../data/wb-ratio.rds")
 
 wb.ratio.plot = function(){
   f = "../data/wb-ratio.rds"

@@ -20,3 +20,7 @@ Uses knn imputation to clean groups 3 and 4 (from GeneralMissingClusters.R). Pro
 # missing-vis.R
 
 Plots pattenrs of missingness in data. Generates the plots for the "Missing values" section of the report.
+
+# num-clusters.R
+
+An attempt to figure out the number of clusters to choose for groups 3 and 4 (more than half of assignments turned in).
