@@ -7,3 +7,4 @@
 *.tex
 report/report_cache/*
 report/report_files/*
+.Rproj.user

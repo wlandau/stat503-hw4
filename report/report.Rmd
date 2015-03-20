@@ -20,7 +20,7 @@ We have three homework grade spreadsheets, each of which comes directly from Bla
 
 #Missing values
 
-A large fraction of homework scores appear as "NA", or missing. Since the spreadsheets come directly from Blackboard, we  assume that almost all NA's correspond to homeworks that students failed to turn in, and only a small number, if any, are from bookkeeping errors. Before clustering, we need to impute these values, and for a imputation strategy, we look at patterns of missingness. 
+A large fraction of homework scores appear as "NA", or missing. Since the spreadsheets come directly from Blackboard, we assume that almost all NA's correspond to homeworks that students failed to turn in, and only a small number, if any, are from bookkeeping errors. Before clustering, we need to impute these values, and for an imputation strategy, we look at patterns of missingness. 
 
 ###Visual patterns in missing values
 
@@ -42,7 +42,7 @@ missingHist()
 missingByAssign()
 ```
 
-```{r missingBarcodesFall13, fig.cap="\\label{fig:missingBarcodesFall13} missing assignment records for fall 2013 students faceted by section number. Each row represents a student, each column is an assignment, and the tiles are colored according to the status of the corresponding assignment (missing or turned in). General patterns are consistent across section number. Most students missed few assignments, and the students with the most missings usually missed the last fifteen assignments. These students most likely dropped the class early.."}
+```{r missingBarcodesFall13, fig.cap="\\label{fig:missingBarcodesFall13} missing assignment records for fall 2013 students faceted by section number. Each row represents a student, each column is an assignment, and the tiles are colored according to the status of the corresponding assignment (missing or turned in). General patterns are consistent across section number. Most students missed few assignments, and the students with the most missings usually missed the last fifteen assignments. These students most likely dropped the class early."}
 missingBarcodesFall13()
 ```
 
@@ -56,10 +56,29 @@ missingBarcodesSpring14()
 
 ###Grouping students by missingness
 
-From inspection, we can partition the students in each semester into four groups...
+From inspection, we can partition the students in each semester into four groups.
+
+Group 1 contains students who did not submit all of the last nine (about half) of all homework assignments. Group 2 contains students (who were not in Group 1) and missed at least nine (about half) of all homework assignments. Group 3 contains students (who were not in Group 1 or 2) and missed at least one homework assignment. Group 4 contains students (who were not in Group 1, 2, or 3) who did not miss any homework assignments.
+
+As a result, we generated 12 main groups (the four groups across three semesters), as shown in Table \ref{tab:MainGroups}.  
 
 ```{r GeneralMissingClusters}
 source("../R/GeneralMissingClusters.R")
+```
+
+
+```{r, message=FALSE, echo=FALSE}
+library(knitr)
+library(dplyr)
+library(ggplot2)
+
+grp <- matrix(c(nrow(Fall13_G1),nrow(Fall13_G2),nrow(Fall13_G3),nrow(Fall13_G4), nrow(Spring14_G1),nrow(Spring14_G2),nrow(Spring14_G3),nrow(Spring14_G4),nrow(Fall14_G1),nrow(Fall14_G2),nrow(Fall14_G3),nrow(Fall14_G4)), ncol=3)
+colnames(grp) <- c('Fall 13', 'Spring 14', 'Fall 14')
+rownames(grp) <- c('Group 1 - Drop outs', 'Group 2 - Common missings', 'Group 3 - Sporadic missings', 'Group 4 - No missings')
+grp.table <- as.table(grp)
+
+grp.table %>%
+  kable(caption = "\\label{tab:MainGroups}The number of students who were categorized into one of four mutually-exclusive groups, for the three semesters. We considered Groups 1 and 2 to be problematic, as they likely represented students who dropped the course or habitually missed assignments. However, even after removing students from Groups 1 and 2, we are still left with a very large dataset to cluster")
 ```
 
 <!--- WL: 
