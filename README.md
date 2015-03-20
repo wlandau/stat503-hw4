@@ -26,7 +26,7 @@ Apply methods of clustering to the clean data. Apply to one semester and use mod
 
 - Applied Dr. Cook's knn imputation method to groups 3 and 4 from Lindsay's method for each semester. Data in data/cleanGrades.Rda is ready for clustering.
 
-- Use cleanGrades.Rda to try to figure out the number of clusters in fall13. Use wb.ratio from kmeans, dendrograms from hierarchical clustering, and the NbClust package.
+- Use cleanGrades.Rda to try to figure out the number of clusters in fall13. Use wb.ratio from kmeans and multiple hierarchical clustering methods, along with dendrograms from hierarchical clustering. NbClust was considered too, but it seems like overkill at this point.
 
 
 ### Fangge
