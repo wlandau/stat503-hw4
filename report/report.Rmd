@@ -81,10 +81,6 @@ grp.table %>%
   kable(caption = "\\label{tab:MainGroups}The number of students who were categorized into one of four mutually-exclusive groups, for the three semesters. We considered Groups 1 and 2 to be problematic, as they likely represented students who dropped the course or habitually missed assignments. However, even after removing students from Groups 1 and 2, we are still left with a very large dataset to cluster")
 ```
 
-<!--- WL: 
-Lindsay's code is inserted above. I think we need an explanation, along with a ktable of the number of students in each group in each semester (Fall13_G1 n=45, Fall13_G2 n=24, etc) to show that throwing out problem students doesn't reduce the size of our data very much. See mwe.Rmd from Andee's email for an example of ktable() in a code chunk. 
---->
-
 ### Trim and impute
 
 As we explain above, groups 1 and 2 are relatively small, and the students in these groups missed at least half of the homework assignments. With good reason, we give each of these groups its own cluster and concentrate the rest of our analysis on groups 3 and 4 only. These remaining students have some missing values left, and we impute them with the nearest neighbors imputation functionality in the DMwR [@DMwR] package. Dr. Cook wrote most of this code.
@@ -93,6 +89,7 @@ As we explain above, groups 1 and 2 are relatively small, and the students in th
 source("../R/impute.R")
 ```
 
+\clearpage
 
 # Number of clusters
 
