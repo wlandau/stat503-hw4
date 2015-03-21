@@ -4,8 +4,8 @@ library(ggplot2)
 # load("../data/cleanGrades.Rda")
 
 # taken directly from Dr. Cook's code from class
-wb.df = function(.data, semester = "fall13", max.k = 6){
-  .data = .data[,-(1:2)]
+wb.df = function(.data, semester = "fall13", max.k = 20){
+  .data = scale(.data[,-(1:2)])
   df.dist <- dist(.data)
   ncl <- NULL
 
@@ -51,7 +51,7 @@ wb.ratio.plot = function(){
 dendros = function(){
   par(mfrow = c(2, 3)) 
   for(method in c("ward.D", "ward.D2", "single", "complete", "average", "centroid")){
-    .data = spring14[,-(1:2)]
+    .data = scale(spring14[,-(1:2)])
     df.dist <- dist(.data)
     hc = hclust(df.dist, method = method)
     plot(hc, main = method, xlab = "")
