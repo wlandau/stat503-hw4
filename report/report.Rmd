@@ -8,8 +8,15 @@ output:
 bibliography: report.bib
 ---
 
+```{r libraries, echo = FALSE}
+library(ggplot2)
+library(knitr)
+
+```
+
 ```{r hooks, echo = F}
-knitr::opts_chunk$set(echo = F, cache = T, message = F, warning = F)
+opts_chunk$set(echo = F, cache = T, message = F, warning = F)
+theme_set(theme_bw(base_family="serif"))
 ```
 
 #Introduction

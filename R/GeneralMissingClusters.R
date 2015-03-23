@@ -79,4 +79,4 @@ Fall14_G3 = temp[ind,]
 Fall14_G4 = temp[-ind,]
 
 ############################# SAVE ALL CLUSTERS #############################
-save(Fall13_G1, Fall13_G2, Fall13_G3, Fall13_G4, Spring14_G1, Spring14_G2, Spring14_G3, Spring14_G4, Fall14_G1, Fall14_G2, Fall14_G3, Fall14_G4, file="../data/mainClusters.Rda")
+#save(Fall13_G1, Fall13_G2, Fall13_G3, Fall13_G4, Spring14_G1, Spring14_G2, Spring14_G3, Spring14_G4, Fall14_G1, Fall14_G2, Fall14_G3, Fall14_G4, file="../data/mainClusters.Rda")

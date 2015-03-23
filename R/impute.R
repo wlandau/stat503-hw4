@@ -32,4 +32,4 @@ clean_grades = lapply(trimmed_grades, function(x){
 
 names(clean_grades) <- names(zeroed_grades) <- names(trimmed_grades)
 attach(clean_grades)
-save(fall13, fall14, spring14, file = "../data/cleanGrades.Rda")
+#save(fall13, fall14, spring14, file = "../data/cleanGrades.Rda")
