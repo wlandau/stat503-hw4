@@ -117,7 +117,7 @@ dendros()
 
 #Acknowledgements
 
-We would like to thank Dr. Cook for her advice on dealing with missing values and her imputation code. Also, we used the R packages DMwR [@DMwR], fpc [@fpc], ggplot2 [@ggplot2], gridExtra [@gridExtra], and reshape2 [@reshape2].
+We would like to thank Dr. Cook for her advice on dealing with missing values and her imputation code. Also, we used the R packages cluster [@cluster], DMwR [@DMwR], fpc [@fpc], ggplot2 [@ggplot2], gridExtra [@gridExtra], and reshape2 [@reshape2].
 
 #References
 

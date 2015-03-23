@@ -1,5 +1,6 @@
 library(fpc)
 library(ggplot2)
+library(cluster)
 
 # load("../data/cleanGrades.Rda")
 
@@ -14,6 +15,12 @@ wb.df = function(.data, semester = "fall13", max.k = 20){
     ncl <- rbind(ncl, data.frame(k = i, 
                                                 wb.ratio = cluster.stats(df.dist, df.km$cluster)$wb.ratio, 
                                                 method = "kmeans"))
+
+    df.pam = pam(.data, k = i, metric = "manhattan")
+    ncl <- rbind(ncl, data.frame(k = i, 
+                                                wb.ratio = cluster.stats(df.dist, df.pam$clustering)$wb.ratio, 
+                                                method = "pam-manhattan"))
+
   }
 
   for(method in c("ward.D", "ward.D2", "single", "complete", "average", "centroid")){
@@ -47,7 +54,6 @@ wb.ratio.plot = function(){
     facet_wrap(~method)
 }
 
-
 dendros = function(){
   par(mfrow = c(2, 3)) 
   for(method in c("ward.D", "ward.D2", "single", "complete", "average", "centroid")){
@@ -58,7 +64,3 @@ dendros = function(){
   }
   par(mfrow = c(1, 1)) 
 }
-
-
-
-
