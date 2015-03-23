@@ -157,6 +157,7 @@ train<-train[,-16]
 test<-test[,-16]
 
 rf <- randomForest(train, cl, xtest=test, ntree=1000)
+rf$importance 
 predictions <- levels(cl)[rf$test$predicted]
 
 predictions<-as.numeric(predictions)
