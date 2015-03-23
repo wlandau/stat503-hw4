@@ -30,6 +30,7 @@ Apply methods of clustering to the clean data. Apply to one semester and use mod
 
 
 ### Fangge
+Hierachical model. Random forest validation. 
 
 ### Lindsay
 
