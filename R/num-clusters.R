@@ -1,6 +1,8 @@
+library(amap)
 library(fpc)
 library(ggplot2)
 library(cluster)
+library(reshape2)
 
 # load("../data/cleanGrades.Rda")
 
@@ -14,12 +16,12 @@ wb.df = function(.data, semester = "fall13", max.k = 20){
     df.km <- kmeans(.data, centers = i, iter.max = 20)
     ncl <- rbind(ncl, data.frame(k = i, 
                                                 wb.ratio = cluster.stats(df.dist, df.km$cluster)$wb.ratio, 
-                                                method = "kmeans"))
+                                                method = "kmeans-euclidian"))
 
-    df.pam = pam(.data, k = i, metric = "manhattan")
+    df.corr = Kmeans(.data, centers = i, iter.max = 40, method = "correlation")
     ncl <- rbind(ncl, data.frame(k = i, 
-                                                wb.ratio = cluster.stats(df.dist, df.pam$clustering)$wb.ratio, 
-                                                method = "pam-manhattan"))
+                                                wb.ratio = cluster.stats(df.dist, df.corr$cluster)$wb.ratio, 
+                                                method = "kmeans-correlation"))
 
   }
 
@@ -63,4 +65,15 @@ dendros = function(){
     plot(hc, main = method, xlab = "")
   }
   par(mfrow = c(1, 1)) 
+}
+
+ward.parcoord = function(){
+  d = spring14
+  .data = scale(d[,-(1:2)])
+  df.dist <- dist(.data)
+  d$Cluster = cutree(hclust(df.dist, method = "ward.D"), 3)
+  dlong = melt(d, id.vars = c("Username", "Section", "Cluster"))
+  ggplot(dlong) + 
+    geom_line(aes(x = variable, y = value, group = Username), alpha = .1) + facet_grid(Cluster~.) +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1))
 }

@@ -98,33 +98,42 @@ source("../R/impute.R")
 
 \clearpage
 
-# Number of clusters
-
-With groups 3 and 4 put together and imputed as above, It may be useful to attempt to determine the appropriate number of clusters. First, we consider wb.ratio, the ratio of average within-cluster Euclidian distance to average between-cluster Euclidian distance. Figure \ref{fig:wb-ratio} shows wb.ratio as a function of $k$, the number of clusters. We show results for kmeans with Euclidian distance (with the kmeans function in core R), the "partitioning around medoids" (pam) method with Manhattan distance in the cluster package [@cluster], and hierarchical clustering with several linkage methods (with the hclust function in core R). It is alarming that wb.ratio does not monotonically decrease with $k$, so any clustering analysis should be cautious. It is especially important to note that single, average, and centroid linkages should not be trusted, because here, wb.ratio mostly increases with increasing $k$. (And yet, for small $k$, these linkages with increasing wb.ratio outperform other methods for small $k$.) The ward linkage clusterings are the most believable because wb.ratio behaves almost as it should: except for some erratic behavior for small $k$, wb.ratio dips sharply and then starts to level off. There is no clear choice of $k$, though $k = 6$ marks the point where most of this erratic behavior stops and a gentle downward slope begins.
+# A look at the clean data 
 
 
+
+# Attempts at typical hard clustering
+
+Here, we try some hard clustering techniques that assume the data separate into clusters spatially. At first, we see if wb.ratio gives us a quick answer for the number of clusters in the data. Figure \ref{fig:wb-ratio} shows wb.ratio as a function of $k$, the number of clusters. We show results for kmeans with Euclidian distance (with the kmeans function in core R), kmeans with correlation distance (in the amap package [@amap]), and hierarchical clustering with several linkage methods (with the hclust function in core R). It is alarming that wb.ratio does not decrease monotonically with $k$. Increasing the number of clusters should improve clustering outcomes. Kmeans with correlation distance is the closest to having monotone decreasing wb.ratio, but it also has the overall highest wb.ratio. This is one indication that the data may not separate. Typical hard clustering just may not work.
 ```{r num-clusters.R}
 source("../R/num-clusters.R")
 ```
 
-```{r wb-ratio-plot, fig.cap="\\label{fig:wb-ratio} wb.ratio as a function of $k$, the number of clusters. We show results for kmeans with Euclidian distance (with the kmeans function in core R), the \"partitioning around medoids\" (pam) method with Manhattan distance in the cluster package [@cluster], and hierarchical clustering with several linkage methods (with the hclust function in core R). It is alarming that wb.ratio does not monotonically decrease with $k$, so any clustering analysis should be cautious. It is especially important to note that single, average, and centroid linkages should not be trusted, since here, wb.ratio mostly with increasing $k$. (And yet, for small $k$, these linkages with increasing wb.ratio outperform other methods for small $k$.) The ward linkage clusterings are the most believable because wb.ratio behaves almost as it should: except for some erratic behavior for small $k$, wb.ratio dips sharply and then starts to level off. There is no clear choice of $k$, though $k = 6$ marks the point where most of this erratic behavior stops and a gentle downward slope begins."}
+```{r wb-ratio-plot, fig.cap="\\label{fig:wb-ratio} wb.ratio as a function of $k$, the number of clusters. We show results for kmeans with Euclidian distance (with the kmeans function in core R), kmeans with correlation distance (in the amap package [@amap]), and hierarchical clustering with several linkage methods (with the hclust function in core R). It is alarming that wb.ratio does not decrease monotonically with $k$. Increasing the number of clusters should improve clustering outcomes. Kmeans with correlation distance is the closest to having monotone decreasing wb.ratio, but it also has the overall highest wb.ratio."}
 wb.ratio.plot()
 ```
 
+We also look at dendrograms from hierarchical clustering to get a sense an optimal $k$, if we can determine $k$ at all. Figure \ref{fig:dendros} shows dendrograms from hierarchical clustering using six linkage methods. Only spring 2014 dendrograms are shown, as results for the other two semesters are similar. The ward linkage dendrograms indicate that $k = 3$ may be reasonable, and the other methods fail to find any meaningful separation.
 
-We also look at dendrograms from hierarchical clustering to get a sense an optimal $k$, if we can determine $k$ at all. Figure \ref{fig:dendros} shows dendrograms from hierarchical clustering using six linkage methods. Only spring 2014 dendrograms are shown, as results for the other two semesters are similar. If we use ward linkage, arguably the most trustworthy choice in Figure \ref{fig:dendros} $k = 3$ is a reasonable choice. The other dendrograms are difficult to interpret. Single and centroid linkage dendrograms are nearly flat, and the complete and average dendrograms are likewise not definitive.  
-
-```{r dendros, fig.cap="\\label{fig:dendros} We also look at dendrograms from hierarchical clustering to get a sense an optimal $k$, if we can determine $k$ at all. Figure \ref{fig:dendros} shows dendrograms from hierarchical clustering using six linkage methods. Only spring 2014 dendrograms are shown, as results for the other two semesters are similar. If we use ward linkage, arguably the most trustworthy choice in Figure \ref{fig:dendros} $k = 3$ is a reasonable choice. The other dendrograms are difficult to interpret. Single and centroid linkage dendrograms are nearly flat, and the complete and average dendrograms are likewise not definitive."}
+```{r dendros, fig.cap="\\label{fig:dendros} dendrograms from hierarchical clustering to get a sense an optimal $k$, if we can determine $k$ at all. Figure \ref{fig:dendros} shows dendrograms from hierarchical clustering using six linkage methods. Only spring 2014 dendrograms are shown, as results for the other two semesters are similar. The ward linkage dendrograms indicate that $k = 3$ may be reasonable, and the other methods fail to find any meaningful separation."}
 dendros()
 ```
 
+As it turns out, ward linkage at $k = 3$ gives only a vague separation. Figure \ref{fig:wardParcoord} shows that ward divides students into high, medium, and low performance, but that there's still a ton of variety within clusters. 
 
+
+Overall, there is little natural spatial separation in the data, and classical hard clustering methods tell a brief, uninteresting story. Self organizing maps and model based clustering may have more to say.
+
+
+```{r wardParcoord, fig.cap = "\\label{fig:wardParcoord} ward divides students into high, medium, and low performance, but that there's still a ton of variety within clusters. Overall, there is little natural spatial separation in the data, and classical hard clustering methods tell a brief, uninteresting story. Self organizing maps and model based clustering may have more to say."}
+ward.parcoord()
+```
 
 
 
 #Acknowledgements
 
-We would like to thank Dr. Cook for her advice on dealing with missing values and her imputation code. Also, we used the R packages cluster [@cluster], DMwR [@DMwR], fpc [@fpc], ggplot2 [@ggplot2], gridExtra [@gridExtra], and reshape2 [@reshape2].
+We would like to thank Dr. Cook for her advice on dealing with missing values and her imputation code. Also, we used the R packages amap [@amap], cluster [@cluster], DMwR [@DMwR], fpc [@fpc], ggplot2 [@ggplot2], gridExtra [@gridExtra], and reshape2 [@reshape2].
 
 #References
 
