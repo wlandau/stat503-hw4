@@ -5,9 +5,6 @@ This file is a general record of decisions, issues, and logicstics.
 # Unclaimed ideas
 
 
-* Visualize the clean data
-
-
 
 # Division of labor
 
@@ -26,7 +23,9 @@ Apply methods of clustering to the clean data. Apply to one semester and use mod
 
 - Applied Dr. Cook's knn imputation method to groups 3 and 4 from Lindsay's method for each semester. Data in data/cleanGrades.Rda is ready for clustering.
 
-- Use cleanGrades.Rda to try to figure out the number of clusters in fall13. Use wb.ratio from kmeans and multiple hierarchical clustering methods, along with dendrograms from hierarchical clustering. NbClust was considered too, but it seems like overkill at this point.
+- Basic visualization of clean data, detection of nuisance variables, correlations among pairs, pca and mds.
+
+- Use cleanGrades.Rda to try to figure out if basic kmeans and hierarchical methods can separate the data at all. Try to figure out the number of clusters. For ward linkage, which actually does provide some separation, visualize and explain it.
 
 
 ### Fangge
