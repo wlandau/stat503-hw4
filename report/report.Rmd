@@ -11,12 +11,16 @@ bibliography: report.bib
 ```{r libraries, echo = FALSE, message = F}
 library(ggplot2)
 library(knitr)
-
 ```
 
 ```{r hooks, echo = F}
-opts_chunk$set(echo = F, cache = T, message = F, warning = F)
+opts_chunk$set(echo = FALSE, cache = TRUE, message = FALSE, warning = FALSE)
 theme_set(theme_bw(base_family="serif"))
+```
+
+
+```{r load-som, cache=FALSE}
+source("../R/som-vis.R") #I am placing this here because I can't get it to run after all other packages are loaded in to the namespace (dplyr, tidyr problems). also may be caching issue
 ```
 
 #Introduction
@@ -75,9 +79,9 @@ source("../R/GeneralMissingClusters.R")
 
 
 ```{r, message=FALSE, echo=FALSE}
-library(knitr)
-library(dplyr)
-library(ggplot2)
+require(knitr)
+require(dplyr)
+require(ggplot2)
 
 grp <- matrix(c(nrow(Fall13_G1),nrow(Fall13_G2),nrow(Fall13_G3),nrow(Fall13_G4), nrow(Spring14_G1),nrow(Spring14_G2),nrow(Spring14_G3),nrow(Spring14_G4),nrow(Fall14_G1),nrow(Fall14_G2),nrow(Fall14_G3),nrow(Fall14_G4)), ncol=3)
 colnames(grp) <- c('Fall 13', 'Spring 14', 'Fall 14')
@@ -141,7 +145,7 @@ mds.plot()
 # Attempts at typical hard clustering
 
 Here, we try some hard clustering techniques that assume the data separate into clusters spatially, just in case there is a hidden spatial separation that we didn't detect in the previous section. At first, we see if wb.ratio gives us a quick answer for the number of clusters in the data. Figure \ref{fig:wb-ratio} shows wb.ratio as a function of $k$, the number of clusters. We show results for kmeans with Euclidian distance (with the kmeans function in core R), kmeans with correlation distance (in the amap package [@amap]), and hierarchical clustering with several linkage methods (with the hclust function in core R). It is alarming that wb.ratio does not decrease monotonically with $k$. Increasing the number of clusters should improve clustering outcomes. Kmeans with correlation distance is the closest to having monotone decreasing wb.ratio, but it also has the overall highest wb.ratio. This is one indication that the data may not separate. Typical hard clustering just may not work.
-```{r num-clusters.R}
+```{r num-clusters.R, cache = FALSE}
 source("../R/num-clusters.R")
 ```
 
@@ -165,8 +169,53 @@ Overall, there is little natural spatial separation in the data, and classical h
 ward.parcoord()
 ```
 
+#Self Organizing Maps
+
+As another attempt to cluster the students by homework grades, we fit multiple self-organizing maps (SOM) using the `kohonen` package [@kohonen] and examined the `wb.ratio` to determine how many nodes should be in the SOM grid. We examined grids of size $2\times1$ up to $15\times15$ and visualized the `wb.ratio` by grid, as well as by total number of nodes in figures \ref{fig:som_ratio1} and \ref{fig:som_ratio2}. Each model is fit using 2000 iterations. 
+
+```{r som_ratio1, fig.cap = "\\label{fig:som_ratio1} A plot of `wb.ratio` by grid values in the self organizing maps that were fit to homework grades. We focus on fall 2013 in order to create a map that can be applied to the other semesters. There is a sharp decline in `wb.ratio` diagonally across the grids."}
+som.plot.wb.ratio
+```
 
 
+```{r som_ratio2, fig.cap = "\\label{fig:som_ratio2} A plot of `wb.ratio` by total number of nodes in the self organizing maps that were fit to homework grades. We focus on fall 2013 in order to create a map that can be applied to the other semesters. There is a sharp decline in `wb.ratio` around 36 nodes in fall 2014 before the ratio levels off. As such, we will work with the $6 \times 6$ SOM.", fig.height=3}
+som.plot.wb.ratio.line
+```
+
+After looking at the `wb.ratio` across the grids and across the total number of nodes, paying special attention to fall 2013, we notice a sharp decline in the ratio at around 36 nodes, or a $6\times6$ gridded SOM model. Thus, we choose the $6\times6$ gridded SOM model and map spring 2014 and fall 2014 to our fitted map. However, before mapping our future semesters to the SOM, we first looked at our clustering in the fall semester (figure \ref{fig:som_cluster}) using a facetted parallel coordinates plot as well as checked convergence (figure \ref{fig:som_converge}) looking at the mean distance to the closest SOM unit during training.
+
+```{r som_converge, fig.cap="\\label{fig:som_converge} Convergence of our choses $6\\times6$ SOM model over 2000 iterations, looking at the mean distance to the closest SOM unit during training. It appears we have a steady convergence at around 600 iterations.", fig.height=3}
+plot(chosen.som[[1]][[1]], "changes")
+```
+
+Looking at the mean distance to the closest SOM unit during training. It appears we have a steady convergence at around 600 iterations, which means we have run our chosen SOM model enough iterations during fitting.
+
+```{r som_cluster, fig.cap="\\label{fig:som_cluster}Clustering in the fall semester of our SOM model using a facetted parallel coordinates plot. We can see some definite patterns within the clusters, specifically in cluster 31, we have the very good students across the board and wihtin clusters 4 and 5 a steady decline in homework grades past a certain point.", fig.height=7}
+som.plot.parcoord
+```
+
+We can see some definite patterns within the clusters, specifically in cluster 31, we have the very good students across the board and within clusters 4 and 5 a steady decline in homework grades past a certain point. Of course, this is not a perfect model by any means as there are definitely some clusters that do not do well, for example cluster 34 has a serious anomoly, and clusters 12 and 18 seem uite varied. Additionally, an issue with this model is that there are 36 clusters, which is a very high number, expecially if our goal is to interpret these clusters in terms of student types.
+
+Now we can fit our other semesters data, spring 2014 and fall 2014, to the chosen fall 2013 SOM model and see if we have similar patterns in the grades. But first, we must process the data to be in the same form as fall 2014, i.e. number of columns and column names. To accomplish this, we use the mapping given in the problem assignment and use simple averages for scores from topics that multiply map to fall 2013 topics.
+
+- Chapter 1, Topic01: What is statistics?
+- Chapter 2, Topic02, Topic04: Displaying and Describing Categorical Data
+- Chapter 3, Topic03: Displaying and Summarizing Quantitative Data
+- Chapter 4, Topic05: Understanding and Comparing Distributions
+- Chapter 5, Topic06: The Standard Deviation as a Ruler and The Normal Model
+- Chapter 6, Topic07: Scatterplots, Association, Correlation
+- Chapter 7,8, Topic08: Linear Regression, Regression Wisdom
+- Chapter 9, Topic11: Understanding Randomness
+- Chapter 10, Topic09: Sample Surveys
+- Chapter 11, Topic10: Experiments
+- Chapter 12, Topic12: From Randomness to Probability
+- Chapter 15I, Topic15: Sampling Distribution Models - Proportions
+- Chapter 16, Topic16: Confidence Intervals for Proportions
+- Chapter 17, Topic17: Testing Hypotheses about Proportions
+- Chapter 15II, Topic18: Sampling Distribution Models - Means
+- Chapter 18, Topic19: Inferences About Means
+- Chapter 19, Topic20: More About Tests and Intervals
+- Chapter 20, Topic21, Topic22, Topic23: Comparing Groups
 
 #Acknowledgements
 
