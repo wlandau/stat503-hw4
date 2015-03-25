@@ -1,3 +1,5 @@
+library(gdata)
+library(ggplot2)
 library(reshape2)
 library(gridExtra)
 library(GGally)
@@ -5,8 +7,14 @@ library(vegan)
 
 # load("../data/cleanGrades.Rda")
 
-
-
+corplot = function(){
+  df = rbind(
+    data.frame(Correlation = as.vector(lowerTriangle(cor(fall13[,-(1:2)]))), Semester = "fall13"),
+    data.frame(Correlation = as.vector(lowerTriangle(cor(fall14[,-(1:2)]))), Semester = "fall14"),
+    data.frame(Correlation = as.vector(lowerTriangle(cor(spring14[,-(1:2)]))), Semester = "spring14")
+  )
+  ggplot(df) + geom_histogram(aes(x = Correlation), binwidth = 0.04) + facet_wrap(~Semester)
+}
 
 histplot.part = function(.data, semester){
   dlong = melt(.data, id.vars = c("Username", "Section"))

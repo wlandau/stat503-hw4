@@ -23,7 +23,7 @@ Apply methods of clustering to the clean data. Apply to one semester and use mod
 
 - Applied Dr. Cook's knn imputation method to groups 3 and 4 from Lindsay's method for each semester. Data in data/cleanGrades.Rda is ready for clustering.
 
-- Basic visualization of clean data, detection of nuisance variables and obvious separation, pca and mds.
+- Basic visualization of clean data, detection of nuisance variables and obvious separation, correlations among variables, pca and mds.
 
 - Use cleanGrades.Rda to try to figure out if basic kmeans and hierarchical methods can separate the data at all. Try to figure out the number of clusters. For ward linkage, which actually does provide some separation, visualize and explain it.
 

@@ -110,11 +110,18 @@ The parallel coordinate plot in the problem statement shows most students tended
 histplot() 
 ```
 
-Figure \ref{fig:pairsplot} shows a scatterplot matrix of the first ten variables from fall 2013. The results of the full 20 variables are similar. The It will be difficult to split the data on any pair of variables, as no pair provides much of a spatial separation in the data. 
+Figure \ref{fig:pairsplot} shows a scatterplot matrix of the first ten variables from fall 2013. The results of the full 20 variables are similar. The It will be difficult to split the data on any pair of variables, as no pair provides much of a spatial separation in the data. In addition, we have a lot of nuisance variables: Figure \ref{fig:corhist} shows that the homework scores are often highly correlated.
 
 ```{r pairsplot, fig.cap= "\\label{fig:pairsplot} scatterplot matrix of the first ten variables from fall 2013. The results of the full 20 variables are similar. It will be difficult to split the data on any pair of variables, as no pair provides much of a spatial separation in the data."}
 pairsplot()
 ```
+
+
+```{r corhist, fig.cap = "\\label{fig:corhist} Histograms of correlations among homework scores, facetted by semester. The homework scores are often highly correlated, leading to nuisance variables and causing problems for typical hard clustering methods."}
+corplot()
+```
+
+
 
 The dimensionality of the data makes visualization difficult, so Figure \ref{fig:pca} shows the first two principal components for each semester, and Figure \ref{fig:mds} plots the dimensionality reduction from multidimensional scaling to two dimensions. In both cases, the data do not spatially separate into clusters. Geometrically, each semester's grades coagulate into a blob. It will be difficult, if not impossible, for typical hard clustering techniques, or any other techniques that assume an obvious visual partitioning, to make any headway. The next section briefly attempts these techniques anyway, self-organizing maps and model-based clustering are much more promising directions.
 
@@ -163,7 +170,7 @@ ward.parcoord()
 
 #Acknowledgements
 
-We would like to thank Dr. Cook for her advice on dealing with missing values and her imputation code. Also, we used the R packages amap [@amap], cluster [@cluster], DMwR [@DMwR], fpc [@fpc], ggplot2 [@ggplot2], gridExtra [@gridExtra], reshape2 [@reshape2], and vegan [@vegan].
+We would like to thank Dr. Cook for her advice on dealing with missing values and her imputation code. Also, we used the R packages amap [@amap], cluster [@cluster], DMwR [@DMwR], fpc [@fpc], gdata [@gdata], ggplot2 [@ggplot2], gridExtra [@gridExtra], reshape2 [@reshape2], and vegan [@vegan].
 
 #References
 
