@@ -93,18 +93,47 @@ grp.table %>%
 As we explain above, groups 1 and 2 are relatively small, and the students in these groups missed at least half of the homework assignments. With good reason, we give each of these groups its own cluster and concentrate the rest of our analysis on groups 3 and 4 only. These remaining students have some missing values left, and we impute them with the nearest neighbors imputation functionality in the DMwR [@DMwR] package. Dr. Cook wrote most of this code.
 
 ```{r impute.R}
-source("../R/impute.R")
+source("../R/impute.R") 
 ```
 
 \clearpage
 
-# A look at the clean data 
+# A look at the cleaned data
+
+```{r explore.R}
+source("../R/explore.R")
+```
+
+The parallel coordinate plot in the problem statement shows most students tended to do fairly well on homework, and Chapters 1, 9, 12, and 19 may be nuisance variables because of the lack of variability. Figure \ref{fig:hist} shows histograms of all the homeworks scores (and the average score) for fall 2013. The results for other semesters are similar. It will be difficult to split on any one variable individually except for maybe chapter 12. Chapters 1 and 2, along with the average score, look like nuisance variables due to low variability.
+
+```{r hist, fig.cap="\\label{fig:hist} histograms of all the homeworks scores (and the average score) for fall 2013. The results for other semesters are similar. It will be difficult to split on any one variable individually except for maybe chapter 12. Chapters 1 and 2, along with the average score, look like nuisance variables due to low variability."}
+histplot() 
+```
+
+Figure \ref{fig:pairsplot} shows a scatterplot matrix of the first ten variables from fall 2013. The results of the full 20 variables are similar. The It will be difficult to split the data on any pair of variables, as no pair provides much of a spatial separation in the data. 
+
+```{r pairsplot, fig.cap= "\\label{fig:pairsplot} scatterplot matrix of the first ten variables from fall 2013. The results of the full 20 variables are similar. It will be difficult to split the data on any pair of variables, as no pair provides much of a spatial separation in the data."}
+pairsplot()
+```
+
+The dimensionality of the data makes visualization difficult, so Figure \ref{fig:pca} shows the first two principal components for each semester, and Figure \ref{fig:mds} plots the dimensionality reduction from multidimensional scaling to two dimensions. In both cases, the data do not spatially separate into clusters. Geometrically, each semester's grades coagulate into a blob. It will be difficult, if not impossible, for typical hard clustering techniques, or any other techniques that assume an obvious visual partitioning, to make any headway. The next section briefly attempts these techniques anyway, self-organizing maps and model-based clustering are much more promising directions.
+
+
+```{r pca, fig.cap="\\label{fig:pca} first two principal components, plotted against each other, for the all semesters. The data do not spatially separate."}
+pcaplot()
+```
+
+Figure \ref{fig:mds} plots the dimensionality reduction from multidimensional scaling to two dimensions.
+
+```{r mds, results="hide", fig.cap="\\label{fig:mds} first two variables from multidimensional scaling, plotted against each other, for all semesters. The data do not spatially separate."}
+mds.plot()
+```
 
 
 
 # Attempts at typical hard clustering
 
-Here, we try some hard clustering techniques that assume the data separate into clusters spatially. At first, we see if wb.ratio gives us a quick answer for the number of clusters in the data. Figure \ref{fig:wb-ratio} shows wb.ratio as a function of $k$, the number of clusters. We show results for kmeans with Euclidian distance (with the kmeans function in core R), kmeans with correlation distance (in the amap package [@amap]), and hierarchical clustering with several linkage methods (with the hclust function in core R). It is alarming that wb.ratio does not decrease monotonically with $k$. Increasing the number of clusters should improve clustering outcomes. Kmeans with correlation distance is the closest to having monotone decreasing wb.ratio, but it also has the overall highest wb.ratio. This is one indication that the data may not separate. Typical hard clustering just may not work.
+Here, we try some hard clustering techniques that assume the data separate into clusters spatially, just in case there is a hidden spatial separation that we didn't detect in the previous section. At first, we see if wb.ratio gives us a quick answer for the number of clusters in the data. Figure \ref{fig:wb-ratio} shows wb.ratio as a function of $k$, the number of clusters. We show results for kmeans with Euclidian distance (with the kmeans function in core R), kmeans with correlation distance (in the amap package [@amap]), and hierarchical clustering with several linkage methods (with the hclust function in core R). It is alarming that wb.ratio does not decrease monotonically with $k$. Increasing the number of clusters should improve clustering outcomes. Kmeans with correlation distance is the closest to having monotone decreasing wb.ratio, but it also has the overall highest wb.ratio. This is one indication that the data may not separate. Typical hard clustering just may not work.
 ```{r num-clusters.R}
 source("../R/num-clusters.R")
 ```
@@ -125,15 +154,16 @@ As it turns out, ward linkage at $k = 3$ gives only a vague separation. Figure \
 Overall, there is little natural spatial separation in the data, and classical hard clustering methods tell a brief, uninteresting story. Self organizing maps and model based clustering may have more to say.
 
 
-```{r wardParcoord, fig.cap = "\\label{fig:wardParcoord} ward divides students into high, medium, and low performance, but that there's still a ton of variety within clusters. Overall, there is little natural spatial separation in the data, and classical hard clustering methods tell a brief, uninteresting story. Self organizing maps and model based clustering may have more to say."}
+```{r wardParcoord, fig.cap = "\\label{fig:wardParcoord} parallel coordinate plot of the spring 2014 scores, facetted by cluster from hierarchical clustering with ward linkage. Ward divides students into high, medium, and low performance, but that there's still a ton of variety within clusters. Overall, there is little natural spatial separation in the data, and classical hard clustering methods tell a brief, uninteresting story. Self organizing maps and model based clustering may have more to say."}
 ward.parcoord()
 ```
 
 
 
+
 #Acknowledgements
 
-We would like to thank Dr. Cook for her advice on dealing with missing values and her imputation code. Also, we used the R packages amap [@amap], cluster [@cluster], DMwR [@DMwR], fpc [@fpc], ggplot2 [@ggplot2], gridExtra [@gridExtra], and reshape2 [@reshape2].
+We would like to thank Dr. Cook for her advice on dealing with missing values and her imputation code. Also, we used the R packages amap [@amap], cluster [@cluster], DMwR [@DMwR], fpc [@fpc], ggplot2 [@ggplot2], gridExtra [@gridExtra], reshape2 [@reshape2], and vegan [@vegan].
 
 #References
 
