@@ -25,7 +25,7 @@ spring14 %>%
          Ch12 = NA,
          Ch20 = (T21 + T22 + T23)/3,
          semester = "spring14") %>%
-  select(semester, starts_with("Ch")) %>% 
+  select(semester, starts_with("Ch"), Username) %>% 
   rbind(
     fall14 %>%
       rename(Ch1 = T01,
@@ -47,8 +47,30 @@ spring14 %>%
              Ch18 = NA,
              Ch19 = NA,
              semester = "fall14") %>%
-      select(semester, starts_with("Ch"))) -> new_data
+      select(semester, starts_with("Ch"), Username)) -> new_data
 
-som.predict <- predict(object = chosen.som[[1]][[1]], 
-                       newdata = new_data %>% filter(semester == "spring14") %>% select(-semester),
-                       trainX = fall13 %>% select(starts_with("Ch")))
+
+
+fall13 %>%
+  select(starts_with("Ch")) %>%
+  select(-Ch12, -Ch18, -Ch19) %>%
+  dplyr::mutate_each(funs(scale), everything()) %>% #standardize!
+  data.matrix() -> fall13.no_missing
+
+som.no_missing <- som(fall13.no_missing, grid=somgrid(xdim = 6, ydim = 6), rlen = 2000)
+
+som.map <- map(x = som.no_missing, 
+               newdata = new_data %>% 
+                 select(-semester, -Username, -Ch12, -Ch18, -Ch19) %>% 
+                 dplyr::mutate_each(funs(scale), everything()) %>%
+                 data.matrix)
+
+
+new_data %>%
+  cbind(classify = som.map$unit.classif) %>%
+  ungroup() %>%
+  gather(variable, value, -classify, -Username, -semester) %>% 
+  ggplot() +
+  geom_line(aes(variable, value, group = Username, colour = semester), alpha = .3) +
+  facet_wrap(~classify) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) -> som.plot.parcoord
