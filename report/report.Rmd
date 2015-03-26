@@ -22,6 +22,8 @@ theme_set(theme_bw(base_family="serif"))
 ```{r load-som, cache=FALSE}
 source("../R/som-vis.R") #I am placing this here because I can't get it to run after all other packages are loaded in to the namespace (dplyr, tidyr problems). also may be caching issue
 source("../R/som-predict.R")
+source("../R/mclust-vis.R")
+source("../R/mclust-predict.R")
 ```
 
 #Introduction
