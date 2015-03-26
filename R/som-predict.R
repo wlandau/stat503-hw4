@@ -4,6 +4,7 @@ require(kohonen)
 require(dplyr)
 require(tidyr)
 require(ggplot2)
+library(fpc)
 
 
 spring14 %>%
@@ -49,8 +50,6 @@ spring14 %>%
              semester = "fall14") %>%
       select(semester, starts_with("Ch"), Username)) -> new_data
 
-
-
 fall13 %>%
   select(starts_with("Ch")) %>%
   select(-Ch12, -Ch18, -Ch19) %>%
@@ -66,11 +65,14 @@ som.map <- map(x = som.no_missing,
                  data.matrix)
 
 
-new_data %>%
+new_data %>% select(-Ch12, -Ch18, -Ch19) %>%
   cbind(classify = som.map$unit.classif) %>%
   ungroup() %>%
   gather(variable, value, -classify, -Username, -semester) %>% 
   ggplot() +
   geom_line(aes(variable, value, group = Username, colour = semester), alpha = .3) +
   facet_wrap(~classify) +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1)) -> som.plot.parcoord
+  theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position = "bottom") -> som.plot.parcoord.predict
+
+
+som.predict.wb.ratio <- cluster.stats(dist(new_data %>% select(-semester, -Username, -Ch12, -Ch18, -Ch19) %>% data.matrix()), som.map$unit.classif)$wb.ratio

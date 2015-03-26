@@ -21,6 +21,7 @@ theme_set(theme_bw(base_family="serif"))
 
 ```{r load-som, cache=FALSE}
 source("../R/som-vis.R") #I am placing this here because I can't get it to run after all other packages are loaded in to the namespace (dplyr, tidyr problems). also may be caching issue
+source("../R/som-predict.R")
 ```
 
 #Introduction
@@ -216,6 +217,17 @@ Now we can fit our other semesters data, spring 2014 and fall 2014, to the chose
 - Chapter 18, Topic19: Inferences About Means
 - Chapter 19, Topic20: More About Tests and Intervals
 - Chapter 20, Topic21, Topic22, Topic23: Comparing Groups
+
+Additionally, Chapter 12: From Randomness to Probability was missing from both spring 2014 and fall 2014 and  Chapter 18: Inferences About Means and Chapter 19: More about Tests and Intervals were both missing from fall 2014. Thus, we threw these variables out of the $6 \times 6$ SOM model and refit before prediction. The results of predicting our new data can be seen in figure \ref{fig:som_predict}.
+
+```{r som-predict, fig.cap="\\label{fig:som_predict}Prediction of spring 2014 and fall 2014 clusters based on the equivalent mapping of homework topics by mapping the data onto the (modified) trained $6\\times6$ SOM model. Nodes 34 and 35 no longer have any members in the cluster for this new data.", fig.height=7}
+som.plot.parcoord.predict
+```
+
+From figure \ref{fig:som_predict}, we do see some clusters that remain intact in the new semesters, for example cluster 7 appears to be those students that performed very poorly on Chapter 5: The Standard Deviation as a Ruler and The Normal Model. Additionally, clusters 5, 6, and 9 seem to have decent patterns within them. However, overall there is a lot of variation within the clusters, showing that this may not be a very good model for prediction. Additionally, we can look at the `wb.ratio` for this new data, the value of `r round(som.predict.wb.ratio, 3)`, which is higher than the `wb.ratio`s for fall 2013. This poor prediction leads us to try and perform model based clustering.
+
+#Model based clustering
+
 
 #Acknowledgements
 
