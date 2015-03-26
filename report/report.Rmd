@@ -227,6 +227,14 @@ som.plot.parcoord.predict
 From figure \ref{fig:som_predict}, we do see some clusters that remain intact in the new semesters, for example cluster 7 appears to be those students that performed very poorly on Chapter 5: The Standard Deviation as a Ruler and The Normal Model. Additionally, clusters 5, 6, and 9 seem to have decent patterns within them. However, overall there is a lot of variation within the clusters, showing that this may not be a very good model for prediction. Additionally, we can look at the `wb.ratio` for this new data, the value of `r round(som.predict.wb.ratio, 3)`, which is higher than the `wb.ratio`s for fall 2013. This poor prediction leads us to try and perform model based clustering.
 
 #Model based clustering
+We also tried model based clustering to see if it will perform better. First we fit the model to fall 13. The VII specification with five clusters performs the best. Figure \ref{fig:mcfall13} show the  
+```{r mcfall13, fig.cap="\\label{fig:mcfall13}Model based clustering of fall 13 in a parallel coordinates plot.", fig.height=7}
+mclust.plot.parcoord
+```
+ 
+ 
+
+
 
 
 #Acknowledgements
