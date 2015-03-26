@@ -250,7 +250,7 @@ Figure \ref{fig:mc_pca} shows the principle component analysis.
 mclust.plot.pca
 ```
 
-We also fit our other semesters data, spring 2014 and fall 2014, to the chosen fall 2013 MC model like we did for the SOM model. We formatted the data in the same way. The results are shown in figure \ref{fig:mc_predict} 
+We also fit our other semesters data, spring 2014 and fall 2014, to the chosen fall 2013 MC model like we did for the SOM model. We formatted the data in the same way. The results are shown in figure \ref{fig:mc_predict}. As we can see, 
 
 ```{r mc_predict, fig.cap="\\label{fig:mc_predict} .", fig.height=7}
 mc.plot.parcoord.predict
