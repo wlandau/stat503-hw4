@@ -231,11 +231,12 @@ From figure \ref{fig:som_predict}, we do see some clusters that remain intact in
 #Model based clustering
 First we fit the model to fall 13 to select a best specification. According to BIC, the VII specification with five clusters performs the best, which is shown in figure \ref{fig:mc_fall13}. The value of the `wb.ratio` is `r round(mclust.wb.ratio, 3)`. 
 
-As we can see from figure \ref{fig:mc_fall13} successfully picked out students who have relatively consistent performance in the upper range(cluster 1), though there are some individual cases with scores near 75 that may be close to some cases in cluster 2, and the zig-zag pattern becomes more and more distinct from cluster 2 to cluster 5, and cases of anomolies increase where some students bombing certain chapters. We can interpretate cluster 5 as students with relatively unstable performance across the semester, if we can call lack-of pattern as a kind of pattern.   
 
 ```{r mc_fall13, fig.cap="\\label{fig:mc_fall13}Model based clustering of fall 13 in a parallel coordinates plot.", fig.height=7}
 mclust.plot.parcoord
 ```
+
+As we can see from figure \ref{fig:mc_fall13} successfully picked out students who have relatively consistent performance in the upper range(cluster 1), though there are some individual cases with scores near 75 that may be close to some cases in cluster 2, and the zig-zag pattern becomes more and more distinct from cluster 2 to cluster 5, and cases of anomolies increase where some students bombing certain chapters. We can interpretate cluster 5 as students with relatively unstable performance across the semester, if we can call lack-of pattern as a kind of pattern.   
 
 Figure \ref{fig:mean_mc_fall13} shows the mean score of each assignment for each cluster. Although it does not show deviations from the mean, we can still see some consistent pattern across clusters like the dive in mean grade for Ch3 and Ch15I, possibly a sign of difficult than usual assignments. The mean is decreasing from cluster 2 to cluster 5, except for some cases where cluster 5 does better than cluster 4 in terms of mean grade. And there is more variance across chapters for cluster 5, which is consistent with results of clustering. 
 
@@ -249,7 +250,7 @@ Figure \ref{fig:mc_pca} shows the principle component analysis.
 mclust.plot.pca
 ```
 
-We also fit our other semesters data, spring 2014 and fall 2014, to the chosen fall 2013 MC model like in the SOM model. We formatted the data in the same way. The results are shown in figure \ref{fig:mc_predict} 
+We also fit our other semesters data, spring 2014 and fall 2014, to the chosen fall 2013 MC model like we did for the SOM model. We formatted the data in the same way. The results are shown in figure \ref{fig:mc_predict} 
 
 ```{r mc_predict, fig.cap="\\label{fig:mc_predict} .", fig.height=7}
 mc.plot.parcoord.predict
