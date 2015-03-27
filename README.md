@@ -27,9 +27,11 @@ Apply methods of clustering to the clean data. Apply to one semester and use mod
 
 - Use cleanGrades.Rda to try to figure out if basic kmeans and hierarchical methods can separate the data at all. Try to figure out the number of clusters. For ward linkage, which actually does provide some separation, visualize and explain it.
 
+- edits and conclusion
 
 ### Fangge
-Hierachical model. Random forest validation. 
+Hierachical model. Random forest validation. Explanations of model-based clustering method and results.
+
 
 ### Lindsay
 
