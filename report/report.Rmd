@@ -239,7 +239,7 @@ plot(fall13.mc, what="BIC")
 mclust.plot.parcoord
 ```
 
-As we can see from figure \ref{fig:mc_fall13} successfully picked out students who have relatively consistent performance in the upper range(cluster 1), though there are some individual cases with scores near 75 that may be close to some cases in cluster 2, and the zig-zag pattern becomes more and more distinct from cluster 2 to cluster 5, and cases of anomolies increase where some students bombed certain chapters. We can interpretate cluster 5 as students with relatively unstable performance across the semester, if we can call lack-of pattern as a kind of pattern.   
+As we can see from figure \ref{fig:mc_fall13} the model successfully picked out students who have relatively consistent performance in the upper range(cluster 1), though there are some individual cases with scores near 75 that may be close to some cases in cluster 2, and the zig-zag pattern becomes more and more distinct from cluster 2 to cluster 5, and cases of anomolies increase where some students bombed certain chapters. We can interpretate cluster 5 as students with relatively unstable performance across the semester, if we can call lack-of pattern as a kind of pattern.   
 
 Figure \ref{fig:mean_mc_fall13} shows the mean score for each assignment by cluster. Although it does not show deviations from the mean, we can still see some consistent pattern across clusters like the dive in mean grade for Ch3 and Ch15I, possibly a sign of difficult than usual assignments. The mean is decreasing from cluster 2 to cluster 5, except for some cases where cluster 5 does better than cluster 4 in terms of mean grade. And there is more variance across chapters for cluster 5, which is consistent with results of clustering. 
 
@@ -247,14 +247,15 @@ Figure \ref{fig:mean_mc_fall13} shows the mean score for each assignment by clus
 mclust.plot.mean.parcoord
 ```
  
-Figure \ref{fig:mc_pca} shows the principle component analysis. There are 5 clusters but you can see the model has some difficulties near the border. 
+Figure \ref{fig:mc_pca} shows the principle component analysis. There are considerable overlappings between cluster 1 and 2, 2 and 3, and 4 and 5, suggesting rooms for improvement in terms of clustering. But we can still see patterns consistent with the parallel coordinates plot. 
 
 ```{r mc_pca, fig.cap="\\label{fig:mc_pca}Clustering for principle components.", fig.height=7}
 mclust.plot.pca
 ```
 
-We also fit our other semesters data, spring 2014 and fall 2014, to the chosen fall 2013 MC model like we did for the SOM model. We formatted the data in the same way. The results are shown in figure \ref{fig:mc_predict}. As we can see, the cluster retain for the new data, especially for fall 14. In general model based clustering does do a better job than SOM. Figure \ref{fig:mc_mean_predict} shows the mean score for each assignment by cluster for the new data. It is pretty consistent with fall 13 data, including the dive in particular assignments and the order of mean grades across clusters. Figure \ref{fig:mc_pca_predict} shows the principle component analysis for the new data. 
-```{r mc_predict, fig.cap="\\label{fig:mc_predict} .", fig.height=7}
+We also fit our other semesters data, spring 2014 and fall 2014, to the chosen fall 2013 MC model like we did for the SOM model. We formatted the data in the same way. The results are shown in figure \ref{fig:mc_predict}. As we can see, the cluster retain for the new data, especially for fall 14. Figure \ref{fig:mc_mean_predict} shows the mean score for each assignment by cluster for the new data. It is pretty consistent with fall 13 data, including the dives in particular assignments and the order of mean grades across clusters. Figure \ref{fig:mc_pca_predict} shows the principle component analysis for the new data.In general the model based clustering does do a better job than SOM, and there are similar patterns in grades across semesters. 
+
+```{r mc_predict, fig.cap="\\label{fig:mc_predict}Prediction of spring 2014 and fall 2014 clusters based on the equivalent mapping of homework topics by mapping the data onto the (modified) trained model.", fig.height=7}
 mc.plot.parcoord.predict
 ```
 
