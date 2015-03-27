@@ -185,7 +185,7 @@ som.plot.wb.ratio
 som.plot.wb.ratio.line
 ```
 
-After looking at the `wb.ratio` across the grids and across the total number of nodes, paying special attention to fall 2013, we notice a sharp decline in the ratio at around 36 nodes, or a $6\times6$ gridded SOM model. Thus, we choose the $6\times6$ gridded SOM model and map spring 2014 and fall 2014 to our fitted map. However, before mapping our future semesters to the SOM, we first looked at our clustering in the fall semester (figure \ref{fig:som_cluster}) using a facetted parallel coordinate plot as well as checked convergence (figure \ref{fig:som_converge}) looking at the mean distance to the closest SOM unit during training.
+After looking at the `wb.ratio` across the grids and across the total number of nodes, paying special attention to fall 2013, we notice a sharp decline in the ratio at around 36 nodes, or a $6\times6$ gridded SOM model. Thus, we choose the $6\times6$ gridded SOM model and map spring 2014 and fall 2014 to our fitted map. However, before mapping our future semesters to the SOM, we first looked at our clustering in the fall semester (Figure \ref{fig:som_cluster}) using a facetted parallel coordinate plot as well as checked convergence (figure \ref{fig:som_converge}) looking at the mean distance to the closest SOM unit during training.
 
 ```{r som_converge, fig.cap="\\label{fig:som_converge} Convergence of our choses $6\\times6$ SOM model over 2000 iterations, looking at the mean distance to the closest SOM unit during training. It appears we have a steady convergence at around 600 iterations.", fig.height=3}
 plot(chosen.som[[1]][[1]], "changes")
@@ -193,11 +193,13 @@ plot(chosen.som[[1]][[1]], "changes")
 
 Looking at the mean distance to the closest SOM unit during training. It appears we have a steady convergence at around 600 iterations, which means we have run our chosen SOM model enough iterations during fitting.
 
-```{r som_cluster, fig.cap="\\label{fig:som_cluster}Clustering in the fall semester of our SOM model using a facetted parallel coordinate plot. We can see some definite patterns within the clusters, specifically in cluster 31, we have the very good students across the board and within clusters 4 and 5 a steady decline in homework grades past a certain point.", fig.height=7}
+```{r som_cluster, fig.cap="\\label{fig:som_cluster} Clustering in the fall semester of our SOM model using a facetted parallel coordinate plot. Students separate by general performance and consistency. For example, cluster 31 has the most high performing and consistent students. However, our insight is even more specific. Some clusters, like 3 and 19, extract students who all had high relative difficulty with some cluster-specific assignment. Cluster 5 shows students who did well on the first assignment, declined in performance, boosted their grades during the middle of the semester, and then declined again at the end.", fig.height=7}
 som.plot.parcoord
 ```
 
-We can see some definite patterns within the clusters, specifically in cluster 31, we have the very good students across the board and within clusters 4 and 5 a steady decline in homework grades past a certain point. Of course, this is not a perfect model by any means as there are definitely some clusters that do not do well, for example cluster 34 has a serious anomaly, and clusters 12 and 18 seem uite varied. Additionally, an issue with this model is that there are 36 clusters, which is a very high number, especially if our goal is to interpret these clusters in terms of student types.
+
+
+Figure \ref{fig:som_cluster} shows that students separate by general performance and consistency. For example, cluster 31 has the most high performing and consistent students. However, our insight is even more specific. Some clusters, like 3 and 19, extract students who all had high relative difficulty with some cluster-specific assignment. Cluster 5 shows students who did well on the first assignment, declined in performance, boosted their grades during the middle of the semester, and then declined again at the end. Some clusters, however, like cluster 24, still have high within-cluster variability.
 
 Now we can fit our other semesters data, spring 2014 and fall 2014, to the chosen fall 2013 SOM model and see if we have similar patterns in the grades. But first, we must process the data to be in the same form as fall 2014, i.e. number of columns and column names. To accomplish this, we use the mapping given in the problem assignment and use simple averages for scores from topics that multiply map to fall 2013 topics.
 
