@@ -249,9 +249,9 @@ Figure \ref{fig:mean_mc_fall13} shows the mean score for each assignment by clus
 mclust.plot.mean.parcoord
 ```
 
-Figure \ref{fig:mc_pca} shows a plot of the first two principle components colored by clusters for fall 2013. There are considerable overlappings between cluster 1 and 2, 2 and 3, and 4 and 5, suggesting rooms for improvement in terms of clustering. But we can still see patterns consistent with the parallel coordinate plot. 
+Figure \ref{fig:mc_pca} shows a plot of the first two principal components colored by clusters (from model-based clustering) for fall 2013. There are considerable overlaps between cluster 1 and 2, 2 and 3, and 4 and 5, suggesting rooms for improvement in terms of clustering. But we can still see patterns consistent with the parallel coordinate plot. 
 
-```{r mc_pca, fig.cap="\\label{fig:mc_pca}Clustering for principle components.", fig.height=7}
+```{r mc_pca, fig.cap="\\label{fig:mc_pca}Results of model-based clustering of the fall 2013 data as shown by plotting the first two principal components. There is not much spatial separation, but that is as expected. Model-based clustering found different patterns in the data that hard clustering would have. For example, cluster 1 is dense, and cluster 5 is sparse and overlaps many of the other clusters.", fig.height=7}
 mclust.plot.pca
 ```
 
@@ -266,9 +266,12 @@ mc.plot.parcoord.predict
 mclust.plot.mean.parcoord.predict
 ```
 
-```{r mc_pca_predict, fig.cap="\\label{fig:mc_pca_predict}Clustering for principle components for new data.", fig.height=7}
+```{r mc_pca_predict, fig.cap="\\label{fig:mc_pca_predict}Results of model-based clustering of the fall 2014 and spring 2014 data as shown by plotting the first two principal components. There is not much spatial separation, but that is as expected. Model-based clustering found different patterns in the data that hard clustering would have. For example, cluster 1 is dense, and cluster 5 is sparse and overlaps many of the other clusters.", fig.height=7}
 mclust.plot.pca.pred
 ```
+
+
+# Conclusion
 
 
 
