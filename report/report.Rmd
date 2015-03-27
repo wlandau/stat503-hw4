@@ -185,7 +185,7 @@ som.plot.wb.ratio
 som.plot.wb.ratio.line
 ```
 
-After looking at the `wb.ratio` across the grids and across the total number of nodes, paying special attention to fall 2013, we notice a sharp decline in the ratio at around 36 nodes, or a $6\times6$ gridded SOM model. Thus, we choose the $6\times6$ gridded SOM model and map spring 2014 and fall 2014 to our fitted map. However, before mapping our future semesters to the SOM, we first looked at our clustering in the fall semester (figure \ref{fig:som_cluster}) using a facetted parallel coordinates plot as well as checked convergence (figure \ref{fig:som_converge}) looking at the mean distance to the closest SOM unit during training.
+After looking at the `wb.ratio` across the grids and across the total number of nodes, paying special attention to fall 2013, we notice a sharp decline in the ratio at around 36 nodes, or a $6\times6$ gridded SOM model. Thus, we choose the $6\times6$ gridded SOM model and map spring 2014 and fall 2014 to our fitted map. However, before mapping our future semesters to the SOM, we first looked at our clustering in the fall semester (figure \ref{fig:som_cluster}) using a facetted parallel coordinate plot as well as checked convergence (figure \ref{fig:som_converge}) looking at the mean distance to the closest SOM unit during training.
 
 ```{r som_converge, fig.cap="\\label{fig:som_converge} Convergence of our choses $6\\times6$ SOM model over 2000 iterations, looking at the mean distance to the closest SOM unit during training. It appears we have a steady convergence at around 600 iterations.", fig.height=3}
 plot(chosen.som[[1]][[1]], "changes")
@@ -193,11 +193,11 @@ plot(chosen.som[[1]][[1]], "changes")
 
 Looking at the mean distance to the closest SOM unit during training. It appears we have a steady convergence at around 600 iterations, which means we have run our chosen SOM model enough iterations during fitting.
 
-```{r som_cluster, fig.cap="\\label{fig:som_cluster}Clustering in the fall semester of our SOM model using a facetted parallel coordinates plot. We can see some definite patterns within the clusters, specifically in cluster 31, we have the very good students across the board and wihtin clusters 4 and 5 a steady decline in homework grades past a certain point.", fig.height=7}
+```{r som_cluster, fig.cap="\\label{fig:som_cluster}Clustering in the fall semester of our SOM model using a facetted parallel coordinate plot. We can see some definite patterns within the clusters, specifically in cluster 31, we have the very good students across the board and within clusters 4 and 5 a steady decline in homework grades past a certain point.", fig.height=7}
 som.plot.parcoord
 ```
 
-We can see some definite patterns within the clusters, specifically in cluster 31, we have the very good students across the board and within clusters 4 and 5 a steady decline in homework grades past a certain point. Of course, this is not a perfect model by any means as there are definitely some clusters that do not do well, for example cluster 34 has a serious anomoly, and clusters 12 and 18 seem uite varied. Additionally, an issue with this model is that there are 36 clusters, which is a very high number, expecially if our goal is to interpret these clusters in terms of student types.
+We can see some definite patterns within the clusters, specifically in cluster 31, we have the very good students across the board and within clusters 4 and 5 a steady decline in homework grades past a certain point. Of course, this is not a perfect model by any means as there are definitely some clusters that do not do well, for example cluster 34 has a serious anomaly, and clusters 12 and 18 seem uite varied. Additionally, an issue with this model is that there are 36 clusters, which is a very high number, especially if our goal is to interpret these clusters in terms of student types.
 
 Now we can fit our other semesters data, spring 2014 and fall 2014, to the chosen fall 2013 SOM model and see if we have similar patterns in the grades. But first, we must process the data to be in the same form as fall 2014, i.e. number of columns and column names. To accomplish this, we use the mapping given in the problem assignment and use simple averages for scores from topics that multiply map to fall 2013 topics.
 
@@ -235,19 +235,19 @@ First we fit the model to fall 13 to select a best specification. Figure \ref{fi
 plot(fall13.mc, what="BIC")
 ```
 
-```{r mc_fall13, fig.cap="\\label{fig:mc_fall13}Model based clustering of fall 13 in a parallel coordinates plot.", fig.height=7}
+```{r mc_fall13, fig.cap="\\label{fig:mc_fall13} parallel coordinate plot of our model based clustering of the fall 2013 students. The model separates students by general level of success and shows that the most successful students have most consistent scores, but other than that, the results do not offer much specific insight.", fig.height=7}
 mclust.plot.parcoord
 ```
 
-As we can see from figure \ref{fig:mc_fall13} the model successfully picked out students who have relatively consistent performance in the upper range(cluster 1), though there are some individual cases with scores near 75 that may be close to some cases in cluster 2, and the zig-zag pattern becomes more and more distinct from cluster 2 to cluster 5, and cases of anomolies increase where some students bombed certain chapters. We can interpretate cluster 5 as students with relatively unstable performance across the semester, if we can call lack-of pattern as a kind of pattern.   
+Figure \ref{fig:mc_fall13} in general, model separates students by overall success and consistency. Cluster 1 has the most successful and consistent students, and cluster 5 has the least successful, least consistent students. Other than that, however, the results do not offer much insight into similarities and differences among students.  
 
 Figure \ref{fig:mean_mc_fall13} shows the mean score for each assignment by cluster. Although it does not show deviations from the mean, we can still see some consistent pattern across clusters like the dive in mean grade for Ch3 and Ch15I, possibly a sign of difficult than usual assignments. The mean is decreasing from cluster 2 to cluster 5, except for some cases where cluster 5 does better than cluster 4 in terms of mean grade. And there is more variance across chapters for cluster 5, which is consistent with results of clustering. 
 
-```{r mean_mc_fall13, fig.cap="\\label{fig:mean_mc_fall13}Plot of mean scores for each assignment by clusters.", fig.height=7}
+```{r mean_mc_fall13, fig.cap="\\label{fig:mean_mc_fall13}Plot of mean scores for each assignment by clusters. Again, the model-based approach separates students by consistency and overall performance. This plot is mostly useful as a profile of general levels of homework difficulty. For example, homework 1 was the easiest for most groups on average.", fig.height=7}
 mclust.plot.mean.parcoord
 ```
  
-Figure \ref{fig:mc_pca} shows the principle component analysis. There are considerable overlappings between cluster 1 and 2, 2 and 3, and 4 and 5, suggesting rooms for improvement in terms of clustering. But we can still see patterns consistent with the parallel coordinates plot. 
+Figure \ref{fig:mc_pca} shows the principle component analysis. There are considerable overlappings between cluster 1 and 2, 2 and 3, and 4 and 5, suggesting rooms for improvement in terms of clustering. But we can still see patterns consistent with the parallel coordinate plot. 
 
 ```{r mc_pca, fig.cap="\\label{fig:mc_pca}Clustering for principle components.", fig.height=7}
 mclust.plot.pca
