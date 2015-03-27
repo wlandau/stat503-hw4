@@ -273,7 +273,7 @@ mclust.plot.pca.pred
 
 # Conclusion
 
-
+STAT 101 students are difficult to classify by their homework grades. Homework grades are highly correlated, a large fraction of grades were missing, and the data are not spatially separated when plotted in Euclidian space. However, patterns do emerge. With hierarchical clustering using ward linkage and with model-based clustering, students separate by overall performance and consistency, with higher performing students being most consistent. This is the most salient pattern across all methods. Our results from self-organizing show this pattern as well, as well as more specific insight. With 36 clusters, students not only separate by performance, but also based on which assignment or assignments they bombed. Also, we see that some students slumped most of the time, did extremely well in the very beginning and middle of the course.
 
 #Acknowledgements
 
