@@ -231,7 +231,7 @@ som.plot.parcoord.predict
 From figure \ref{fig:som_predict}, we do see some clusters that remain intact in the new semesters, for example cluster 7 appears to be those students that performed very poorly on Chapter 5: The Standard Deviation as a Ruler and The Normal Model. Additionally, clusters 5, 6, and 9 seem to have decent patterns within them. However, overall there is a lot of variation within the clusters, showing that this may not be a very good model for prediction. Additionally, we can look at the `wb.ratio` for this new data, the value of `r round(som.predict.wb.ratio, 3)`, which is higher than the `wb.ratio`s for fall 2013. This poor prediction leads us to try and perform model based clustering.
 
 #Model based clustering
-First we fit the model to fall 13 to select a best specification. Figure \ref{fig:mc_BIC} shows the BIC of different specifications. From the plot, the VII specification with five clusters seems to be the sensible choice which is shown in figure \ref{fig:mc_fall13}. The value of the `wb.ratio` is `r round(mclust.wb.ratio, 3)`. 
+First we fit the model to fall 13 to select a best specification. Figure \ref{fig:mc_BIC} shows the BIC of different specifications. From the plot, the VII (variable equal spherical) specification with five clusters seems to be the sensible choice which is shown in figure \ref{fig:mc_fall13}. The value of the `wb.ratio` for this model is `r round(mclust.wb.ratio, 3)`, however as we've seen there are not truly separated clusters within the data cloud, so this may not be a very valuable metric to keep track of.
 
 ```{r fig:mc_BIC, fig.cap="\\label{fig:mc_BIC}Plot of BIC for different models and numbers of clusters.", fig.height=7}
 plot(fall13.mc, what="BIC")
@@ -241,21 +241,21 @@ plot(fall13.mc, what="BIC")
 mclust.plot.parcoord
 ```
 
-Figure \ref{fig:mc_fall13} in general, model separates students by overall success and consistency. Cluster 1 has the most successful and consistent students, and cluster 5 has the least successful, least consistent students. Other than that, however, the results do not offer much insight into similarities and differences among students.  
+Figure \ref{fig:mc_fall13} shows that this model generally separates students by overall success and consistency. Cluster 1 has the most successful and consistent students, and cluster 5 has the least successful, least consistent students. Other than that, however, the results do not offer much insight into similarities and differences among students.  
 
-Figure \ref{fig:mean_mc_fall13} shows the mean score for each assignment by cluster. Although it does not show deviations from the mean, we can still see some consistent pattern across clusters like the dive in mean grade for Ch3 and Ch15I, possibly a sign of difficult than usual assignments. The mean is decreasing from cluster 2 to cluster 5, except for some cases where cluster 5 does better than cluster 4 in terms of mean grade. And there is more variance across chapters for cluster 5, which is consistent with results of clustering. 
+Figure \ref{fig:mean_mc_fall13} shows the mean score for each assignment by cluster. Although it does not show deviations from the mean, we can still see some consistent pattern across clusters like the dive in mean grade for Ch3 and Ch15I, possibly a sign of more difficult than usual assignments. The mean is decreasing from cluster 2 to cluster 5, except for some cases where cluster 5 does better than cluster 4 in terms of mean grade. And there is more variance across chapters for cluster 5, which is consistent with results of clustering. 
 
 ```{r mean_mc_fall13, fig.cap="\\label{fig:mean_mc_fall13}Plot of mean scores for each assignment by clusters. Again, the model-based approach separates students by consistency and overall performance. This plot is mostly useful as a profile of general levels of homework difficulty. For example, homework 1 was the easiest for most groups on average.", fig.height=7}
 mclust.plot.mean.parcoord
 ```
  
-Figure \ref{fig:mc_pca} shows the principle component analysis. There are considerable overlappings between cluster 1 and 2, 2 and 3, and 4 and 5, suggesting rooms for improvement in terms of clustering. But we can still see patterns consistent with the parallel coordinate plot. 
+Figure \ref{fig:mc_pca} shows a plot of the first two principle components colored by clusters for fall 2013. There are considerable overlappings between cluster 1 and 2, 2 and 3, and 4 and 5, suggesting rooms for improvement in terms of clustering. But we can still see patterns consistent with the parallel coordinate plot. 
 
 ```{r mc_pca, fig.cap="\\label{fig:mc_pca}Clustering for principle components.", fig.height=7}
 mclust.plot.pca
 ```
 
-We also fit our other semesters data, spring 2014 and fall 2014, to the chosen fall 2013 MC model like we did for the SOM model. We formatted the data in the same way. The results are shown in figure \ref{fig:mc_predict}. As we can see, the cluster retain for the new data, especially for fall 14. Figure \ref{fig:mc_mean_predict} shows the mean score for each assignment by cluster for the new data. It is pretty consistent with fall 13 data, including the dives in particular assignments and the order of mean grades across clusters. Figure \ref{fig:mc_pca_predict} shows the principle component analysis for the new data.In general the model based clustering does do a better job than SOM, and there are similar patterns in grades across semesters. 
+We also fit our other semesters data, spring 2014 and fall 2014, to the chosen fall 2013 model based clustering model like we did for the SOM model. We formatted the data in the same way. The results are shown in figure \ref{fig:mc_predict}. As we can see, the clusters retain similar structure for the new data, especially for fall 14. Figure \ref{fig:mc_mean_predict} shows the mean score for each assignment by cluster for the new data. It is pretty consistent with fall 13 data, including the dives in particular assignments and the order of mean grades across clusters. Figure \ref{fig:mc_pca_predict} shows the principle component analysis for the new data. In general the model based clustering does do a better job than SOM, and there are similar patterns in grades across semesters. 
 
 ```{r mc_predict, fig.cap="\\label{fig:mc_predict}Prediction of spring 2014 and fall 2014 clusters based on the equivalent mapping of homework topics by mapping the data onto the trained model.", fig.height=7}
 mc.plot.parcoord.predict
