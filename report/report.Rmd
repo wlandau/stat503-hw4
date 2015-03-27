@@ -32,6 +32,8 @@ STAT 101 course instructors at Iowa State University usually claim their student
 
 We have three homework grade spreadsheets, each of which comes directly from Blackboard [@blackboard], Iowa State's system for managing course materials and grades. Each dataset corresponds to a single semester of STAT 101: either fall 2013, fall 2014, or spring 2014. Each semester has six or seven sections of roughly one hundred students each. Every spreadsheet has roughly twenty variables, each of which corresponds to a homework grade (either percentage of points earned or NA for a missing assignment) or the average homework score with missing assignments removed.
 
+The public GitHub repository at \url{https://github.com/wlandau/stat503-hw4} contains our work, including the Rmarkdown source and R code.
+
 #Missing values
 
 A large fraction of homework scores appear as "NA", or missing. Since the spreadsheets come directly from Blackboard, we assume that almost all NA's correspond to homeworks that students failed to turn in, and only a small number, if any, are from bookkeeping errors. Before clustering, we need to impute these values, and for an imputation strategy, we look at patterns of missingness. 
